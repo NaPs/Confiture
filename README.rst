@@ -11,7 +11,7 @@ Features
 --------
 
 - Configuration format kept as simple as possible.
-- Developper friendly APIs.
+- Developer friendly APIs.
 - Types are expressed in the syntax, so the parser can guess it without
   validation.
 - Four primitive types: string, number, boolean, or list.
@@ -54,7 +54,7 @@ This is an example of configuration file for an imaginary web server::
         }
     }
 
-You can access to each values using the developper friendly API::
+You can access to each values using the developer friendly API::
 
     >>> from dotconf import Dotconf
     >>> parsed_conf = Dotconf.from_file('mywebserver.conf')
@@ -123,7 +123,7 @@ TODO
 ----
 
 - External configuration file include.
-- Argparse integration (to allow user to overrid a config key with an argument).
+- Argparse integration (to allow user to override a config key with an argument).
 - More test.
 
 
