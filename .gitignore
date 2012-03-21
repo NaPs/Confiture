@@ -1,0 +1,6 @@
+*.swp
+docs/_build/*
+*.pyc
+test.py
+samples
+*.old

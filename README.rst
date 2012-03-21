@@ -1,0 +1,136 @@
+=======
+Dotconf
+=======
+
+Dotconf is an advanced configuration parser which allow nested sections to any
+level, typed values in syntax, file include and so more. Dotconf is also
+shipped with a powerful schema validation system.
+
+
+Features
+--------
+
+- Configuration format kept as simple as possible.
+- Developper friendly APIs.
+- Types are expressed in the syntax, so the parser can guess it without
+  validation.
+- Four primitive types: string, number, boolean, or list.
+- More complex composite types can be created using the schema validation
+  system.
+- Nested section of any deep. Sections can take a special "argument" value
+  (look at the example).
+- Schema validation system, all schema can be defined using declarative or
+  imperative way.
+- External file include with globbing (not yet implemented).
+- Tests (only parser is covered yet)
+- Released under MIT license.
+
+
+Example
+-------
+
+This is an example of configuration file for an imaginary web server::
+
+
+    daemon = True
+    pidfile = '/var/run/myapp.pid'
+    interface = '0.0.0.0:80'
+    interface_ssl = '0.0.0.0:443'
+
+    host 'example.org' {
+        path '/' {
+            rate_limit = 30
+        }
+    }
+
+    host 'protected.example.org' {
+        enable_ssl = yes
+
+        path '/files' {
+            enable_auth = yes
+            user 'foo' {
+                password = 'bar'
+            }
+        }
+    }
+
+You can access to each values using the developper friendly API::
+
+    >>> from dotconf import Dotconf
+    >>> parsed_conf = Dotconf.from_file('mywebserver.conf')
+    >>> print parsed_conf.get('daemon', False)
+    True
+
+
+Even more exciting, you can create a validation schema to avoid you the
+painful chore of manual configuration file validation::
+
+    from dotconf.schema import many, once
+    from dotconf.schema.containers import Section, Value
+    from dotconf.schema.types import Boolean, Integer, Float, String
+
+    # Schema definition:
+
+    class UserSection(Section):
+        password = Value(String())
+        _meta = {'repeat': many, 'unique': True}
+
+    class PathSection(Section):
+        rate_limit = Value(Float(), default=0)
+        enable_auth = Value(Boolean(), default=False)
+        user = UserSection()
+
+    class VirtualHostSection(Section):
+        base_path = Value(String())
+        enable_ssl = Value(Boolean(), default=False)
+        path = PathSection()
+        _meta = {'repeat': many, 'unique': True}
+
+    class MyWebserverConfiguration(Section):
+        daemon = Value(Boolean()default=False)
+        pidfile = Value(String(), default=None)
+        interface = Value(String(), default='127.0.0.1:80')
+        interface_ssl = Value(String(), default='127.0.0.1:443')
+        host = VirtualHostSection()
+
+Then you can use the API exactly as if it was not validated::
+
+    >>> from dotconf import Dotconf
+    >>> from myconfschema import MyWebserverConfiguration
+    >>> parsed_conf = Dotconf(conf, schema=MyWebserverConfiguration)
+    >>> print 'daemon:', parsed_conf.get('daemon')
+    daemon: True
+    >>> for vhost in parsed_conf.subsections('host'):
+    >>>     print vhost.args[0]
+    >>>     if vhost.get('enable_ssl'):
+    >>>         print '  SSL enabled'
+    >>>     for path in vhost.subsections('path'):
+    >>>         print '  ' + path.args[0]
+    >>>         if path.get('enable_auth'):
+    >>>             print '    Following users can access to this directory:'
+    >>>             for user in path.subsections('user'):
+    >>>                 print '     - ' + user.args[0]
+    >>>
+    example.org
+      /
+    protected.example.org
+      SSL enabled
+      /files
+        Following users can access to this directory:
+          - foo
+
+TODO
+----
+
+- External configuration file include.
+- Argparse integration (to allow user to overrid a config key with an argument).
+- More test.
+
+
+Changelog
+---------
+
+v0.1 (not yet released)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Initial version.
