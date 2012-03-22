@@ -25,7 +25,7 @@ class Value(Container):
     def validate(self, value):
         if value is None:
             if self._default is required:
-                raise ValidationError('This value is required')
+                raise ValidationError('this value is required')
             else:
                 return ConfigValue(None, self._default)
         else:
@@ -51,7 +51,7 @@ class List(Container):
     def validate(self, value):
         if value is None:
             if self._default is required:
-                raise ValidationError('This value is required')
+                raise ValidationError('this value is required')
             else:
                 return ConfigValue(None, self._default)
         else:
