@@ -115,7 +115,18 @@ class Section(Container):
         # Rebuild the section using schema:
         validated_section = ConfigSection(section.name, section.parent,
                                           position=section.position)
-        #TODO: validate the argument
+        # Validate the section's argument:
+        if self.meta['args'] is None and section.args is not None:
+            raise ValidationError('section %s, this section does not take '
+                                  'any argument' % section.name,
+                                  position=section.args.position)
+        elif self.meta['args'] is not None:
+            try:
+                self.meta['args'].validate(section.args)
+            except ValidationError as err:
+                msg = 'section %s, arguments, %s' % (section.name, err)
+                raise ValidationError(msg, position=err.position)
+        # Validate the section's children:
         for name, container in self.keys.iteritems():
             if isinstance(container, Section):
                 # Validate subsections of this section:
