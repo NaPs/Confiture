@@ -241,9 +241,12 @@ class DotconfParser(object):
         """section_args : value LIST_SEP section_args
                         | value"""
         if len(p) == 2:
-            p[0] = [p[1]]
+            position = Position(self._input_name,
+                                p.lineno(1),
+                                p.lexer.column(p.lexpos(1)))
+            p[0] = ConfigValue('<args>', [p[1]], position=position)
         else:
-            p[3].insert(0, p[1])
+            p[3].value.insert(0, p[1])
             p[0] = p[3]
 
     def p_empty(self, p):
