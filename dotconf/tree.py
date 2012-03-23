@@ -2,6 +2,7 @@
 """
 
 
+from itertools import chain
 from collections import defaultdict
 
 
@@ -95,6 +96,15 @@ class ConfigSection(object):
         else:
             raise TypeError('child must be a ConfigValue or ConfigSection object')
 
+    def iterchildren(self):
+        """ Iterate over all children of this section.
+
+        ..note::
+
+            This is used for the include feature of parser.
+        """
+
+        return chain(self._values.itervalues(), self._subsections.itervalues())
     #
     # Public API -- User methods
     #   These methods are intended for configuration tree traversal by user.

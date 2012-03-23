@@ -2,6 +2,8 @@
 """
 
 
+from glob import glob
+
 import ply.lex as lex
 import ply.yacc as yacc
 
@@ -16,6 +18,24 @@ class ParsingError(Exception):
     def __init__(self, msg, position=None):
         super(ParsingError, self).__init__(msg)
         self.position = position
+
+
+def default_external_opener(locator):
+    """ The default locator used to open included external files.
+    """
+    parsed_externals = []
+    for external in glob(locator):
+        try:
+            with open(external) as fexternal:
+                external_data = fexternal.read()
+        except IOError as err:
+            raise ParsingError('Unable to open %s (%s)' % (external, err))
+        parser = DotconfParser(external_data, debug=False, write_tables=False,
+                               errorlog=yacc.NullLogger(), input_name=external,
+                               external_opener=default_external_opener)
+        parsed_externals.append(parser.parse())
+    return parsed_externals
+
 
 #
 # Lexer
@@ -41,7 +61,7 @@ class DotconfLexer(object):
     # Tokens definition
     #
 
-    reserved = {'yes': 'YES', 'no': 'NO'}
+    reserved = {'yes': 'YES', 'no': 'NO', 'include': 'INCLUDE'}
     tokens = ['LBRACE', 'RBRACE', 'NAME', 'TEXT', 'NUMBER',
               'ASSIGN', 'LIST_SEP'] + reserved.values()
 
@@ -136,6 +156,8 @@ class DotconfParser(object):
     def __init__(self, input, **kwargs):
         self._input = input
         self._input_name = kwargs.pop('input_name', '<unknown>')
+        self._external_opener = kwargs.pop('external_opener',
+                                           default_external_opener)
         self._lexer = kwargs.pop('lexer', DotconfLexer())
         self._parser = yacc.yacc(module=self, **kwargs)
         self._old_line = 0
@@ -216,6 +238,12 @@ class DotconfParser(object):
         self._check_line(p.lexer.lineno, p.lineno(2),
                          self._lexer.column(p.lexpos(2)), p[2].name)
         p[1].append(p[2])
+        p[0] = p[1]
+
+    def p_section_content_include(self, p):
+        """section_content : section_content INCLUDE TEXT"""
+        for external in self._external_opener(p[3]):
+            p[1] += list(external.iterchildren())
         p[0] = p[1]
 
     def p_section(self, p):
