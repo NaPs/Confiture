@@ -68,6 +68,9 @@ class ConfigSection(object):
     def __repr__(self):
         return "<Section '%s'>" % self.name
 
+    def __contains__(self, name):
+        return name in self._values or name in self._subsections
+
     #
     # Public API -- Tree construction methods
     #   These methods are intended as internal usage for the configuration
