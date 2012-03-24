@@ -6,7 +6,7 @@ ldesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 
 setup(name='dotconf',
       version=version,
-      description="Advanced configuration parser for Python",
+      description='Advanced configuration parser for Python',
       long_description=ldesc,
       classifiers=['Development Status :: 3 - Alpha',
                    'Intended Audience :: Developers',
