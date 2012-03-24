@@ -129,7 +129,7 @@ TODO
 Changelog
 ---------
 
-v0.1 (not yet released)
-~~~~~~~~~~~~~~~~~~~~~~~
+v0.1 released on 24/03/2012
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Initial version.
