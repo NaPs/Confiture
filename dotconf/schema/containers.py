@@ -163,5 +163,12 @@ class Section(Container):
                                           position=err.position)
                 else:
                     validated_section.register(validated_value, name=name)
-        #TODO: Handle the allow_unknown meta option
+        # Handle the allow_unknown meta option:
+        for name, child in section.iteritems():
+            if name not in validated_section:
+                if self.meta['allow_unknown']:
+                    validated_section.register(child, name=name)
+                else:
+                    msg = 'section %s, unknown key %s' % (section.name, name)
+                    raise ValidationError(msg, position=child.position)
         return validated_section

@@ -108,6 +108,13 @@ class ConfigSection(object):
         """
 
         return chain(self._values.itervalues(), self._subsections.itervalues())
+
+    def iteritems(self):
+        """ Like :meth:``iterchildren`` but return a couple (key, child).
+        """
+
+        return chain(self._values.iteritems(), self._subsections.iteritems())
+
     #
     # Public API -- User methods
     #   These methods are intended for configuration tree traversal by user.
