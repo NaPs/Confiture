@@ -82,22 +82,18 @@ class ConfigSection(object):
 
         :param child: ConfigValue or ConfigSection object to register
         """
+        if name is None:
+            name = child.name
         if isinstance(child, ConfigValue):
-            if name is None:
-                name = child.name
-            if name in self._values or name in self._subsections:
-                raise
-            else:
-                self._values[name] = child
+            if name in self:
+                raise KeyError('A child with this name already exists')
+            self._values[name] = child
         elif isinstance(child, ConfigSection):
-            if name is None:
-                name = child.name
             if name in self._values:
-                raise
-            else:
-                self._subsections[name].append(child)
+                raise KeyError('A child with this name already exists')
+            self._subsections[name].append(child)
         else:
-            raise TypeError('child must be a ConfigValue or ConfigSection object')
+            raise TypeError('Child must be a ConfigValue or ConfigSection object')
 
     def iterchildren(self):
         """ Iterate over all children of this section.
