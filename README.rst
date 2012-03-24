@@ -21,7 +21,7 @@ Features
   (look at the example).
 - Schema validation system, all schema can be defined using declarative or
   imperative way.
-- External file include with globbing (not yet implemented).
+- External file include with globbing.
 - Tests (only parser is covered yet)
 - Released under MIT license.
 
@@ -122,7 +122,6 @@ Then you can use the API exactly as if it was not validated::
 TODO
 ----
 
-- External configuration file include.
 - Argparse integration (to allow user to override a config key with an argument).
 - More test.
 
