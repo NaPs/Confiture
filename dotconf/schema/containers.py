@@ -1,8 +1,13 @@
 """ Builtin containers of dotconf.schema
 """
 
+try:
+    import argparse
+except ImportError:
+    argparse = None
+
 from dotconf.tree import ConfigSection, ConfigValue
-from dotconf.schema import Container, ValidationError
+from dotconf.schema import Container, ArgparseContainer, ValidationError
 
 
 required = object()
@@ -10,7 +15,7 @@ many = (1, None)
 once = (1, 1)
 
 
-class Value(Container):
+class Value(ArgparseContainer):
 
     """ A value container used to store a scalar value of specified type.
 
@@ -18,11 +23,44 @@ class Value(Container):
     :param default: the default value of the container
     """
 
-    def __init__(self, value_type, default=required):
+    def __init__(self, value_type, default=required, **kwargs):
+        super(Value, self).__init__(**kwargs)
         self._type = value_type
         self._default = default
 
+    def populate_argparse(self, parser, name):
+        value = self
+        class Action(argparse.Action):
+            def __init__(self, **kwargs):
+                super(Action, self).__init__(**kwargs)
+                self._const = kwargs.get('const', None)
+            def __call__(self, parser, namespace, values, option_string=None):
+                if self._const is not None:
+                    value._argparse_value = ConfigValue(name, self._const)
+                else:
+                    value._argparse_value = ConfigValue(name, values[0])
+
+        if self._argparse_names:
+            if self._type.is_argparse_flag:
+                nargs = 0
+                const = True
+            else:
+                nargs = 1
+                const = None
+            nargs = 0 if self._type.is_argparse_flag else 1
+            parser.add_argument(*self._argparse_names, action=Action,
+                                type=self._type.cast, nargs=nargs,
+                                metavar=self._argparse_metavar,
+                                help=self._argparse_help, const=const)
+            if self._type.is_argparse_flag and self._argparse_names_invert:
+                parser.add_argument(*self._argparse_names_invert,
+                                    action=Action, type=self._type.cast,
+                                    nargs=0, help=self._argparse_help_invert,
+                                    const=False)
+
     def validate(self, value):
+        if self._argparse_value is not None:
+            value = self._argparse_value
         if value is None:
             if self._default is required:
                 raise ValidationError('this value is required')
@@ -36,7 +74,7 @@ class Value(Container):
             return ConfigValue(value.name, validated_value, position=value.position)
 
 
-class List(Container):
+class List(ArgparseContainer):
 
     """ A list container used to store a list of scalar value of specified type.
 
@@ -44,11 +82,26 @@ class List(Container):
     :param default: the default value of the container
     """
 
-    def __init__(self, values_type, default=required):
+    def __init__(self, values_type, default=required, **kwargs):
+        super(List, self).__init__(**kwargs)
         self._type = values_type
         self._default = default
 
+    def populate_argparse(self, parser, name):
+        value = self
+        class Action(argparse.Action):
+            def __call__(self, parser, namespace, values, option_string=None):
+                value._argparse_value = ConfigValue(name, values)
+        if self._argparse_names:
+            nargs = '*'
+            parser.add_argument(*self._argparse_names, action=Action,
+                                type=self._type.cast, nargs=nargs,
+                                metavar=self._argparse_metavar,
+                                help=self._argparse_help)
+
     def validate(self, value):
+        if self._argparse_value is not None:
+            value = self._argparse_value
         if value is None:
             if self._default is required:
                 raise ValidationError('this value is required')
@@ -107,6 +160,13 @@ class Section(Container):
             self.keys[name] = container
         else:
             raise KeyError('key already exists')
+
+    def populate_argparse(self, parser, name=None):
+        """ Populate an argparse parser.
+        """
+
+        for name, container in self.keys.iteritems():
+            container.populate_argparse(parser, name=name)
 
     def validate(self, section):
         if not isinstance(section, ConfigSection):

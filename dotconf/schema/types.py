@@ -15,6 +15,9 @@ class Number(Type):
         else:
             return value
 
+    def cast(self, value):
+        return float(value)
+
 
 class Integer(Number):
 
@@ -35,6 +38,9 @@ class Integer(Number):
             return int(value)
         else:
             raise ValidationError('%r is not an integer value' % value)
+
+    def cast(self, value):
+        return int(value)
 
 
 class Float(Number):
@@ -65,6 +71,8 @@ class Boolean(Type):
         my_boolean = yes
     """
 
+    is_argparse_flag = True
+
     def __init__(self):
         super(Boolean, self).__init__()
 
@@ -72,6 +80,9 @@ class Boolean(Type):
         if value is not True and value is not False:
             raise ValidationError('%r is not a boolean value' % value)
         return value
+
+    def cast(self, value):
+        return bool(value)
 
 
 class String(Type):
@@ -93,3 +104,6 @@ class String(Type):
 
     def validate(self, value):
         return str(value)
+
+    def cast(self, value):
+        return value
