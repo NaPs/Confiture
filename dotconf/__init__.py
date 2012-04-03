@@ -2,7 +2,7 @@
 """
 
 
-from dotconf.parser import DotconfLexer, DotconfParser, yacc
+from dotconf.parser import DotconfParser, yacc
 
 
 class Dotconf(object):
