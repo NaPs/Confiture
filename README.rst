@@ -129,10 +129,11 @@ TODO
 Changelog
 ---------
 
-v0.2 (not yet released)
-~~~~~~~~~~~~~~~~~~~~~~~
+v0.2 released on 03/04/2012
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Added argparse integration feature
+- Added argparse integration feature & documentation
+- Cleanup
 
 v0.1 released on 24/03/2012
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
