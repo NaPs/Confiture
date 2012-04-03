@@ -22,6 +22,7 @@ Features
 - Schema validation system, all schema can be defined using declarative or
   imperative way.
 - External file include with globbing.
+- Integration with argparse.
 - Tests (only parser is covered yet)
 - Released under MIT license.
 
@@ -122,7 +123,6 @@ Then you can use the API exactly as if it was not validated::
 TODO
 ----
 
-- Argparse integration (to allow user to override a config key with an argument).
 - More test.
 
 
@@ -132,8 +132,21 @@ Changelog
 v0.2 (not yet released)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+- Added argparse integration feature
 
 v0.1 released on 24/03/2012
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Initial version.
+
+
+Contribute
+----------
+
+You can contribute to Dotconf through these ways:
+
+- Main Git repository: https://idevelop.org/p/dotconf/source/tree/master/
+- Bitbucket: https://bitbucket.org/NaPs/dotconf
+- Github: https://github.com/NaPs/Dotconf
+
+Feel free to contact me for any question/suggestion: <antoine@inaps.org>.
