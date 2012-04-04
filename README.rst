@@ -129,10 +129,13 @@ TODO
 Changelog
 ---------
 
-v0.3 (not yet released)
-~~~~~~~~~~~~~~~~~~~~~~~
+v0.3 released on 04/04/2012
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--
+- Added IPAddress, IPNetwork, Regex and Url types
+- Added min and max options on Integer type
+- Added units on number parsing (42k == 42000)
+- Fixed bug with validation of long numbers
 
 v0.2 released on 03/04/2012
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
