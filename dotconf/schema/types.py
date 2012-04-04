@@ -1,6 +1,8 @@
 """ Builtin types of dotconf.schema
 """
 
+import urlparse
+
 try:
     import ipaddr
 except ImportError:
@@ -161,5 +163,23 @@ class IPNetwork(IPAddress):
         except ipaddr.AddressValueError:
             raise ValidationError('%r does not appear to be an IPv%s address'
                                   % (value, self._version))
+        except ValueError as err:
+            raise ValidationError(str(err))
+
+
+class Url(String):
+
+    """ A string based type representing an URL.
+
+    This type return an urlparse.ParseResult object.
+
+    Example in configuration::
+
+        proxy = "http://proxy:3128"
+    """
+
+    def validate(self, value):
+        try:
+            return urlparse.urlparse(value)
         except ValueError as err:
             raise ValidationError(str(err))
