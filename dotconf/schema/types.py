@@ -10,8 +10,8 @@ except ImportError:
 else:
     IPADDR_ENABLED = True
 
-
 from dotconf.schema import Type, ValidationError
+
 
 class Number(Type):
 
