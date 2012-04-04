@@ -20,7 +20,8 @@ class Number(Type):
     """
 
     def validate(self, value):
-        if not isinstance(value, int) and not isinstance(value, float):
+        if not isinstance(value, int) and not isinstance(value, float) \
+            and not isinstance(value, long):
             raise ValidationError('%r is not a number' % value)
         else:
             return value
