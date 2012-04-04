@@ -1,6 +1,7 @@
 """ Builtin types of dotconf.schema
 """
 
+import re
 import urlparse
 
 try:
@@ -123,6 +124,23 @@ class String(Type):
         return str(value)
 
     def cast(self, value):
+        return value
+
+
+class Regex(String):
+
+    """ A string base type validated against a regex.
+    """
+
+    def __init__(self, regex, error='value doesn\'t match'):
+        super(String, self).__init__()
+        self._regex = re.compile(regex)
+        self._error = error
+
+    def validate(self, value):
+        value = super(Regex, self).validate(value)
+        if not self._regex.match(value):
+            raise ValidationError(self._error)
         return value
 
 
