@@ -32,19 +32,31 @@ class Integer(Number):
 
     """ A type representing an integer in the configuration.
 
+    :param min: define the minimum acceptable value value of the integer
+    :param max: define the maximum acceptable value value of the integer
+
     Example in configuration::
 
         my_integer = 42
         my_integer = 42.0  # Will also match this type
     """
 
-    def __init__(self):
+    def __init__(self, min=None, max=None):
         super(Integer, self).__init__()
+        self._min = min
+        self._max = max
 
     def validate(self, value):
         value = super(Integer, self).validate(value)
         if int(value) == value:
-            return int(value)
+            value = int(value)
+            if self._min is not None and value < self._min:
+                raise ValidationError('%r is lower than the minimum (%d)'
+                                      % (value, self._min))
+            elif self._max is not None and value > self._max:
+                raise ValidationError('%r is greater than the maximum (%d)'
+                                      % (value, self._max))
+            return value
         else:
             raise ValidationError('%r is not an integer value' % value)
 
