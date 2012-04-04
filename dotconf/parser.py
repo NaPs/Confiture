@@ -10,6 +10,24 @@ import ply.yacc as yacc
 from dotconf.tree import ConfigSection, ConfigValue, Position
 
 
+UNITS = {'k': 10 ** 3,
+         'M': 10 ** 6,
+         'G': 10 ** 9,
+         'T': 10 ** 12,
+         'P': 10 ** 15,
+         'E': 10 ** 18,
+         'Z': 10 ** 21,
+         'Y': 10 ** 24,
+         'Ki': 2 ** 10,
+         'Mi': 2 ** 20,
+         'Gi': 2 ** 30,
+         'Ti': 2 ** 40,
+         'Pi': 2 ** 50,
+         'Ei': 2 ** 60,
+         'Zi': 2 ** 70,
+         'Yi': 2 ** 80}
+
+
 class ParsingError(Exception):
 
     """ Error raised when a parsing error occurs.
@@ -62,8 +80,9 @@ class DotconfLexer(object):
     #
 
     reserved = {'yes': 'YES', 'no': 'NO', 'include': 'INCLUDE'}
+    reserved.update(dict(((kw, 'UNIT') for kw in UNITS)))
     tokens = ['LBRACE', 'RBRACE', 'NAME', 'TEXT', 'NUMBER',
-              'ASSIGN', 'LIST_SEP'] + reserved.values()
+              'ASSIGN', 'LIST_SEP'] + list(set(reserved.values()))
 
     t_LBRACE = '{'
     t_RBRACE = '}'
@@ -79,6 +98,8 @@ class DotconfLexer(object):
             token.value = True
         elif token.type == 'NO':
             token.value = False
+        elif token.type == 'UNIT':
+            token.value = UNITS[token.value]
         return token
 
     def t_TEXT(self, token):
@@ -198,8 +219,16 @@ class DotconfParser(object):
         """value : TEXT
                  | YES
                  | NO
-                 | NUMBER"""
+                 | number"""
         p[0] = p[1]
+
+    def p_number(self, p):
+        """number : NUMBER
+                  | NUMBER UNIT"""
+        if len(p) == 2:
+            p[0] = p[1]
+        else:
+            p[0] = p[1] * p[2]
 
     #
     # List management rules:
