@@ -1,8 +1,15 @@
 """ Builtin types of dotconf.schema
 """
 
-from dotconf.schema import Type, ValidationError
+try:
+    import ipaddr
+except ImportError:
+    IPADDR_ENABLED = False
+else:
+    IPADDR_ENABLED = True
 
+
+from dotconf.schema import Type, ValidationError
 
 class Number(Type):
 
@@ -103,3 +110,56 @@ class String(Type):
 
     def cast(self, value):
         return value
+
+
+class IPAddress(String):
+
+    """ A string based type representing an ipv4 or ipv6 address.
+
+    This type require the "ipaddr" package to work and will return an
+    :class:`ipaddr.IPAddress` object.
+
+    :param version: type or ip address to validate, can be 4 (ipv4 addresses
+        only), 6 (ipv6 addresses only), or None (both).
+
+    Example in configuration::
+
+        interface = "127.0.0.1"
+    """
+
+    def __init__(self, version=None):
+        if not IPADDR_ENABLED:
+            raise
+        super(IPAddress, self).__init__()
+        self._version = version
+
+    def validate(self, value):
+        try:
+            return ipaddr.IPAddress(value, version=self._version)
+        except (ValueError, ipaddr.AddressValueError) as err:
+            raise ValidationError(str(err))
+
+
+class IPNetwork(IPAddress):
+
+    """ A string based type representing an ipv4 or ipv6 network.
+
+    This type require the "ipaddr" package to work and will return an
+    :class:`ipaddr.IPNetwork` object.
+
+    :param version: type or ip address to validate, can be 4 (ipv4 addresses
+        only), 6 (ipv6 addresses only), or None (both).
+
+    Example in configuration::
+
+        allow = "10.0.0.0/8"
+    """
+
+    def validate(self, value):
+        try:
+            return ipaddr.IPNetwork(value, version=self._version)
+        except ipaddr.AddressValueError:
+            raise ValidationError('%r does not appear to be an IPv%s address'
+                                  % (value, self._version))
+        except ValueError as err:
+            raise ValidationError(str(err))

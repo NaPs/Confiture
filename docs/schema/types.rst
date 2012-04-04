@@ -6,6 +6,8 @@ String based types
 ------------------
 
 .. autoclass:: dotconf.schema.types.String
+.. autoclass:: dotconf.schema.types.IPAddress
+.. autoclass:: dotconf.schema.types.IPNetwork
 
 
 Number based types
