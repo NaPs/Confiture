@@ -89,18 +89,14 @@ class String(Type):
 
     """ A type representing a string in the configuration.
 
-    :param regex: if provided, the string will be validated to match with the
-                  regex
-
     Example in configuration::
 
         my_string = "hello, world!"
 
     """
 
-    def __init__(self, regex=None):
+    def __init__(self):
         super(String, self).__init__()
-        self._regex = regex
 
     def validate(self, value):
         return str(value)
