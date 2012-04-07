@@ -6,6 +6,7 @@ Dotconf is an advanced configuration parser which allow nested sections to any
 level, typed values in syntax, file include and so more. Dotconf is also
 shipped with a powerful schema validation system.
 
+The full documentation can be found here: http://dotconf.readthedocs.org
 
 Features
 --------
