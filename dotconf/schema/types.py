@@ -3,6 +3,7 @@
 
 import re
 import urlparse
+import socket
 
 try:
     import ipaddr
@@ -214,3 +215,89 @@ class Url(String):
             return urlparse.urlparse(value)
         except ValueError as err:
             raise ValidationError(str(err))
+
+
+class IPSocketAddress(String):
+
+    """ A string based type representing an (ip address, port) couple.
+
+    This type return an IPSocketAddress.Address object.
+
+    Example in configuration::
+
+        interface = "0.0.0.0:80"
+    """
+
+    def __init__(self, default_addr='127.0.0.1', default_port=None, version=None):
+        if not IPADDR_ENABLED:
+            raise RuntimeError('You must install the ipaddr package to use this type')
+        self._default_addr = default_addr
+        self._default_port = default_port
+        self._version = version
+        super(IPSocketAddress, self).__init__()
+
+    def validate(self, value):
+        raw_addr, _, raw_port = value.partition(':')
+        if not raw_addr:
+            raw_addr = self._default_addr
+        if not raw_port:
+            if self._default_port is None:
+                raise ValidationError('You must specify a port')
+            else:
+                raw_port = self._default_port
+
+        try:
+            addr = ipaddr.IPAddress(raw_addr, version=self._version)
+        except (ValueError, ipaddr.AddressValueError) as err:
+            raise ValidationError(str(err))
+
+        try:
+            port = int(raw_port)
+        except ValueError:
+            raise ValidationError('%r is not a port (not an integer)' % raw_port)
+        if not 1 <= port <= 65535:
+            raise ValidationError('%r is not a port (not in 1 - 65535 range)' % port)
+
+        return self.Address(addr, port)
+
+
+    class Address(object):
+
+        def __init__(self, addr, port):
+            self.addr = addr
+            self.port = port
+
+        def __repr__(self):
+            return 'IPSocketAddress.Address(%s:%s)' % (self.addr, self.port)
+
+        def to_tuple(self):
+            return (str(self.addr), self.port)
+
+        def _create_socket(self, type):
+            if self.addr.version == 4:
+                family = socket.AF_INET
+            else:
+                family = socket.AF_INET6
+            return socket.socket(family, type)
+
+        def to_listening_socket(self, type):
+            sock = self._create_socket(type)
+            sock.listen(self.to_tuple())
+            return sock
+
+        def to_socket(self, type):
+            sock = self._create_socket(type)
+            sock.connect(self.to_tuple())
+            return sock
+
+        def to_listening_tcp_socket(self):
+            return self.to_listening_socket(socket.SOCK_STREAM)
+
+        def to_listening_udp_socket(self):
+            return self.to_listening_socket(socket.SOCK_DGRAM)
+
+        def to_tcp_socket(self):
+            return self.to_socket(socket.SOCK_STREAM)
+
+        def to_udp_socket(self):
+            return self.to_socket(socket.SOCK_DGRAM)
