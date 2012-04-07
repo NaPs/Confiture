@@ -121,6 +121,39 @@ Then you can use the API exactly as if it was not validated::
         Following users can access to this directory:
           - foo
 
+Setup
+-----
+
+The fastest and more common way to install Dotconf is using pip::
+
+    pip install dotconf
+
+Debian
+~~~~~~
+
+If you use Debian, you can also use the Tecknet repositories. Add this lines
+in your ``/etc/apt/source.list`` file::
+
+    deb http://debian.tecknet.org/debian squeeze tecknet
+    deb-src http://debian.tecknet.org/debian squeeze tecknet
+
+Add the Tecknet repositories key in your keyring:
+
+    # wget http://debian.tecknet.org/debian/public.key -O - | apt-key add -
+
+Then, update and install::
+
+    # aptitude update
+    # aptitude install python-dotconf
+
+Archlinux
+~~~~~~~~~
+
+If you use Archlinux, a Dotconf package is available in Aur::
+
+    yaourt -S python2-dotconf
+
+
 TODO
 ----
 
