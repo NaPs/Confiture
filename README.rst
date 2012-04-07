@@ -163,10 +163,15 @@ TODO
 Changelog
 ---------
 
-v0.4 (not yet released)
-~~~~~~~~~~~~~~~~~~~~~~~
+v0.4 released on 07/04/2012
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--
+- Added debian package
+- Added IPSocketAddress type
+- Added Array container
+- Added release procedure
+- Fixed bug on IPAddress and IPNetwork types when ipaddr is missing
+- Fixed documentation build
 
 v0.3 released on 04/04/2012
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
