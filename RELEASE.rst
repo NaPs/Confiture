@@ -29,3 +29,4 @@ Release procedure::
         following message:
         > Started development on {new_version}~dev
     [ ] Push commits on all remotes.
+    [ ] Update the doc on read the docs
