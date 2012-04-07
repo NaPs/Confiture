@@ -10,7 +10,7 @@ String based types
 .. autoclass:: dotconf.schema.types.IPAddress
 .. autoclass:: dotconf.schema.types.IPNetwork
 .. autoclass:: dotconf.schema.types.Url
-.. autoclass:: dotconf.schema.types.IPAddressSocket
+.. autoclass:: dotconf.schema.types.IPSocketAddress
 
 
 Number based types
