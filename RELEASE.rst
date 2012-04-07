@@ -6,6 +6,7 @@ Release procedure::
 
     [ ] Remove the ~dev in setup.py version
     [ ] Remove the ~dev in docs/conf.py version
+    [ ] Remove the ~dev in debian/changelog and update changes
     [ ] Update the changelog in README.rst to add release date
     [ ] Commit changes on setup.py, docs/conf.py and README.rst with
         the following message:
@@ -20,6 +21,10 @@ Release procedure::
         > ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         >
         > -
+    [ ] Update the debian/changelog adding the new version
+        with: dch -v {version}~dev
+        and complete with this change
+        > * Development release.
     [ ] Commit changes on setup.py, docs/conf.py and README.rst with the
         following message:
         > Started development on {new_version}~dev
