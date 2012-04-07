@@ -123,6 +123,38 @@ class List(ArgparseContainer):
             return ConfigValue(value.name, validated_list, position=value.position)
 
 
+class Array(List):
+
+    """ An array container used to store a fixed size list of scalar values of
+        the specified type.
+
+    :param size: size of the array
+    :param \*\*kwargs: same arguments as List
+    """
+
+    def __init__(self, size, *args, **kwargs):
+        super(Array, self).__init__(*args, **kwargs)
+        self._size = size
+
+    def populate_argparse(self, parser, name):
+        value = self
+        class Action(argparse.Action):
+            def __call__(self, parser, namespace, values, option_string=None):
+                value._argparse_value = ConfigValue(name, values)
+        if self._argparse_names:
+            parser.add_argument(*self._argparse_names, action=Action,
+                                type=self._type.cast, nargs=self._size,
+                                metavar=self._argparse_metavar,
+                                help=self._argparse_help)
+
+    def validate(self, value):
+        value = super(Array, self).validate(value)
+        if len(value.value) != self._size:
+            raise ValidationError('bad array size (should be %d, found %d items)'
+                                  % (self._size, len(value.value)))
+        return value
+
+
 class Section(Container):
 
     """ A section container used to store a mapping between name and other

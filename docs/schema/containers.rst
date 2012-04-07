@@ -137,3 +137,9 @@ List containers
 ---------------
 
 .. autoclass:: dotconf.schema.containers.List
+
+
+Array containers
+----------------
+
+.. autoclass:: dotconf.schema.containers.Array
