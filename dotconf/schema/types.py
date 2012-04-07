@@ -163,7 +163,7 @@ class IPAddress(String):
 
     def __init__(self, version=None):
         if not IPADDR_ENABLED:
-            raise
+            raise RuntimeError('You must install the ipaddr package to use this type')
         super(IPAddress, self).__init__()
         self._version = version
 
