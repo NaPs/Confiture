@@ -134,6 +134,17 @@ class ConfigSection(object):
 
     @property
     def args(self):
+        if self._args is not None:
+            return self._args.value
+        else:
+            return None
+
+    @args.setter
+    def args(self, value):
+        self._args = value
+
+    @property
+    def args_raw(self):
         return self._args
 
     @property

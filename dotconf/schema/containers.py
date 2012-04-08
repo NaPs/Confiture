@@ -220,10 +220,12 @@ class Section(Container):
                                   position=section.args.position)
         elif self.meta['args'] is not None:
             try:
-                self.meta['args'].validate(section.args)
+                validated_args = self.meta['args'].validate(section.args_raw)
             except ValidationError as err:
                 msg = 'section %s, arguments, %s' % (section.name, err)
                 raise ValidationError(msg, position=err.position)
+            else:
+                validated_section.args = validated_args
         # Validate the section's children:
         for name, container in self.keys.iteritems():
             if isinstance(container, Section):
