@@ -67,6 +67,12 @@ class Value(ArgparseContainer):
             else:
                 return ConfigValue(None, self._default)
         else:
+            if isinstance(value.value, list):
+                if len(value.value) == 1:
+                    value.value = value.value[0]
+                else:
+                    raise ValidationError('%r is a list' % value.value,
+                                          position=value.position)
             try:
                 validated_value = self._type.validate(value.value)
             except ValidationError as err:
