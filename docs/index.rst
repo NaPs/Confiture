@@ -112,6 +112,7 @@ Contents
    :maxdepth: 2
 
    schema/index
+   tipsandtricks/index
 
 Indices and tables
 ==================
