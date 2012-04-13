@@ -39,9 +39,8 @@ def test_parser_basic():
     daemon = yes  # This is a comment after an assignation
     # This is comment
     '''
-    lexer = DotconfLexer()
-    parser = DotconfParser(debug=True, write_tables=False, errorlog=yacc.NullLogger())
-    output = parser.parse(test, lexer=lexer, tracking=True)
+    parser = DotconfParser(test)
+    output = parser.parse()
     eq_(output.get('daemon'), True)
 
 def test_parser_list():
@@ -56,9 +55,8 @@ def test_parser_list():
             2,
             3,
     '''
-    lexer = DotconfLexer()
-    parser = DotconfParser(debug=True, write_tables=False, errorlog=yacc.NullLogger())
-    output = parser.parse(test, lexer=lexer, tracking=True)
+    parser = DotconfParser(test)
+    output = parser.parse()
     eq_(output.get('list1'), [1, 2, 3])
     eq_(output.get('list2'), [1, 2, 3])
     eq_(output.get('list3'), [1])
@@ -73,15 +71,13 @@ def test_parser_section():
     section2 'arg' {}
     section3 'arg1', 'arg2' {}
     '''
-    lexer = DotconfLexer()
-    parser = DotconfParser(debug=True, write_tables=False, errorlog=yacc.NullLogger())
-    output = parser.parse(test, lexer=lexer, tracking=True)
+    parser = DotconfParser(test)
+    output = parser.parse()
     eq_(tuple(output.subsections('section1'))[0].get('key'), 'test')
     eq_(tuple(output.subsections('section2'))[0].args, ['arg'])
     eq_(tuple(output.subsections('section3'))[0].args, ['arg1', 'arg2'])
 
 def test_parser_empty():
     test = ''''''
-    lexer = DotconfLexer()
-    parser = DotconfParser(debug=True, write_tables=False, errorlog=yacc.NullLogger())
-    output = parser.parse(test, lexer=lexer, tracking=True)
+    parser = DotconfParser(test)
+    output = parser.parse()
