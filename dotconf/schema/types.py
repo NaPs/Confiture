@@ -157,6 +157,16 @@ class Regex(_BaseRegex):
         return value.string
 
 
+class NamedRegex(_BaseRegex):
+
+    """ A string based type like Regex but returning named groups in dict.
+    """
+
+    def validate(self, value):
+        value = super(NamedRegex, self).validate(value)
+        return value.groupdict()
+
+
 class IPAddress(String):
 
     """ A string based type representing an ipv4 or ipv6 address.
