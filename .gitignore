@@ -4,3 +4,7 @@ docs/_build/*
 test.py
 samples
 *.old
+dist/
+parser.out
+parsetab.py
+dotconf.egg-info
