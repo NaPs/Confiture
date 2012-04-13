@@ -129,9 +129,9 @@ class String(Type):
         return value
 
 
-class Regex(String):
+class _BaseRegex(String):
 
-    """ A string base type validated against a regex.
+    """ Base class for regex types.
     """
 
     def __init__(self, regex, error='value doesn\'t match'):
@@ -140,10 +140,21 @@ class Regex(String):
         self._error = error
 
     def validate(self, value):
-        value = super(Regex, self).validate(value)
-        if not self._regex.match(value):
+        value = super(_BaseRegex, self).validate(value)
+        match = self._regex.match(value)
+        if match is None:
             raise ValidationError(self._error)
-        return value
+        return match
+
+
+class Regex(_BaseRegex):
+
+    """ A string based type validated against a regex.
+    """
+
+    def validate(self, value):
+        value = super(Regex, self).validate(value)
+        return value.string
 
 
 class IPAddress(String):
