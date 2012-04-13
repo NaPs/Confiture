@@ -11,6 +11,7 @@ String based types
 .. autoclass:: dotconf.schema.types.IPNetwork
 .. autoclass:: dotconf.schema.types.Url
 .. autoclass:: dotconf.schema.types.IPSocketAddress
+.. autoclass:: dotconf.schema.types.Eval
 
 
 Number based types

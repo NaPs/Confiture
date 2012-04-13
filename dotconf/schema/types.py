@@ -301,3 +301,35 @@ class IPSocketAddress(String):
 
         def to_udp_socket(self):
             return self.to_socket(socket.SOCK_DGRAM)
+
+
+class Eval(String):
+
+    """ A string base type evaluating string as Python expression.
+
+    Example in configuration::
+
+        sum = 'sum(range(3, 10))'
+
+    .. warning::
+        This type can be dangerous since any Python expression can be typed
+        by the user, like __import__("sys").exit(). Use it at your own risk.
+    """
+
+    def __init__(self, locals=None, globals=None):
+        super(String, self).__init__()
+        if locals is None:
+            self._locals = {}
+        else:
+            self._locals = locals
+        if globals is None:
+            self._globals = {}
+        else:
+            self._globals = globals
+
+    def validate(self, value):
+        value = super(Eval, self).validate(value)
+        try:
+            return eval(value, self._globals, self._locals)
+        except Exception as err:
+            raise ValidationError('Bad expression: %s' % err)
