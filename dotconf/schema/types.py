@@ -167,6 +167,31 @@ class NamedRegex(_BaseRegex):
         return value.groupdict()
 
 
+class RegexPattern(String):
+
+    """ A re Python object.
+
+    :param flags: python re compile `flag <http://docs.python.org/library/re.html#re.compile>`_
+
+    Example in configuration::
+
+        match = '/[a-z]+(-[a-z]+)?\.css'
+    """
+
+    def __init__(self, flags=0):
+        super(String, self).__init__()
+        self.flags = flags
+
+    def validate(self, value):
+        value = super(RegexPattern, self).validate(value)
+        # Try to compile regex object:
+        try:
+            value = re.compile(value, self.flags)
+        except re.error:
+            raise ValidationError('Bad format for regular expression')
+        return value
+
+
 class IPAddress(String):
 
     """ A string based type representing an ipv4 or ipv6 address.

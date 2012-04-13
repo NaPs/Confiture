@@ -8,6 +8,7 @@ String based types
 .. autoclass:: dotconf.schema.types.String
 .. autoclass:: dotconf.schema.types.Regex
 .. autoclass:: dotconf.schema.types.NamedRegex
+.. autoclass:: dotconf.schema.types.RegexPattern
 .. autoclass:: dotconf.schema.types.IPAddress
 .. autoclass:: dotconf.schema.types.IPNetwork
 .. autoclass:: dotconf.schema.types.Url
