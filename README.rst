@@ -8,6 +8,10 @@ shipped with a powerful schema validation system.
 
 The full documentation can be found here: http://dotconf.readthedocs.org
 
+.. image:: https://www.ohloh.net/p/dotconf-python/widgets/project_thin_badge.gif
+   :target: https://www.ohloh.net/p/dotconf-python?ref=sample
+
+
 Features
 --------
 
