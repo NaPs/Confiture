@@ -143,3 +143,4 @@ Array containers
 ----------------
 
 .. autoclass:: dotconf.schema.containers.Array
+.. autoclass:: dotconf.schema.containers.TypedArray

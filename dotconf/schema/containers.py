@@ -5,6 +5,7 @@ try:
     import argparse
 except ImportError:
     argparse = None
+from itertools import izip
 
 from dotconf.tree import ConfigSection, ConfigValue
 from dotconf.schema import Container, ArgparseContainer, ValidationError
@@ -159,6 +160,60 @@ class Array(List):
             raise ValidationError('bad array size (should be %d, found %d items)'
                                   % (self._size, len(value.value)))
         return value
+
+
+class TypedArray(ArgparseContainer):
+
+    """ An array container used to store a fixed size list of scalar values
+        with specified type for each of them.
+
+    :param values_types: types of each item in a list
+    :param default: the default value of the container
+    """
+
+    def __init__(self, values_types, default=required, **kwargs):
+        super(TypedArray, self).__init__(**kwargs)
+        self._types = values_types
+        self._default = default
+
+    def populate_argparse(self, parser, name):
+        value = self
+        class Action(argparse.Action):
+            def __call__(self, parser, namespace, values, option_string=None):
+                value._argparse_value = ConfigValue(name, values)
+        if self._argparse_names:
+            nargs = '*'
+            parser.add_argument(*self._argparse_names, action=Action,
+                                type=str, nargs=nargs,
+                                metavar=self._argparse_metavar,
+                                help=self._argparse_help)
+
+    def validate(self, value):
+        if self._argparse_value is not None:
+            value = self._argparse_value
+        if value is None:
+            if self._default is required:
+                raise ValidationError('this value is required')
+            else:
+                return ConfigValue(None, self._default)
+        else:
+            values = value.value
+            if not isinstance(values, list):
+                values = [values]
+            validated_list = []
+            if len(values) != len(self._types):
+                raise ValidationError('bad array size (should be %d, found %d '
+                                      'items)' % (len(self._types), len(values)))
+
+            for i, (item, item_type) in enumerate(izip(values, self._types)):
+                try:
+                    item = item_type.validate(item)
+                except ValidationError as err:
+                    raise ValidationError('item #%d, %s' % (i, err),
+                                          position=value.position)
+                else:
+                    validated_list.append(item)
+            return ConfigValue(value.name, validated_list, position=value.position)
 
 
 class Section(Container):
