@@ -3,8 +3,6 @@
 
 from dotconf.parser import DotconfLexer, DotconfParser
 
-import ply.yacc as yacc
-
 from nose.tools import eq_
 
 
