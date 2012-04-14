@@ -1,4 +1,5 @@
 include README.rst
+include RELEASE.rst
 include COPYING
 include requirements.txt
 recursive-include docs *
