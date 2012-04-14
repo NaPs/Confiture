@@ -1,5 +1,5 @@
-dotconf (0.4~dev-1) stable; urgency=low
+dotconf (1.5-1) stable; urgency=low
 
-  * Development release.
+  * Initial package of Dotconf 1.5
 
- -- Antoine Millet <antoine@inaps.org>  Fri, 06 Apr 2012 23:46:06 +0200
+ -- Antoine Millet <antoine@inaps.org>  Sat, 14 Apr 2012 22:51:09 +0200

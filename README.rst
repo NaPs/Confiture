@@ -167,10 +167,26 @@ TODO
 Changelog
 ---------
 
-v0.5 (not yet released)
-~~~~~~~~~~~~~~~~~~~~~~~
+v1.5 released on 14/04/2012
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--
+First stable release of Dotconf has been released, development will now take
+care of API compatibility. The project status has been changed to "Beta" on the
+PYPI, and should be "Stable" on the next release if no major bug is found.
+Packages will be updated for Debian and Archlinux, feel free to contact me if
+you want to package it for your distro.
+
+Changes:
+
+- Added Eval, NamedRegex and RegexPattern types
+- Added TypedArray container
+- Fixed bug with scalar values from a singleton list in Value container
+- Fixed argument validation in Section container
+- Updated documentation (new tips and tricks section)
+
+New contributors:
+
+- Anaël Beutot (thanks for RegexPattern type and argument validation fix)
 
 v0.4 released on 07/04/2012
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
