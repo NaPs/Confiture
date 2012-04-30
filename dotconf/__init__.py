@@ -11,6 +11,11 @@ class Dotconf(object):
         self._config = config
         self._schema = schema
 
+    @classmethod
+    def from_filename(cls, filename, **kwargs):
+        fconf = open(filename)
+        return cls(fconf.read())
+
     def _parse(self):
         parser = DotconfParser(self._config, debug=False, write_tables=False,
                                errorlog=yacc.NullLogger())
