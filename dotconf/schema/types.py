@@ -82,7 +82,7 @@ class Float(Number):
         super(Float, self).__init__()
 
     def validate(self, value):
-        value = super(self, Float).validate(value)
+        value = super(Float, self).validate(value)
         return float(value)
 
 
