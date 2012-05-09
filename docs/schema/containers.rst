@@ -133,6 +133,12 @@ Value container
 .. autoclass:: dotconf.schema.containers.Value
 
 
+Choice container
+----------------
+
+.. autoclass:: dotconf.schema.containers.Choice
+
+
 List containers
 ---------------
 

@@ -81,6 +81,64 @@ class Value(ArgparseContainer):
             return ConfigValue(value.name, validated_value, position=value.position)
 
 
+class Choice(ArgparseContainer):
+
+    """ A choice container used to store a choice of acceptable values.
+
+    This container take a choices dict where each key is one of the acceptable
+    values, and the according value, the value returned when the key is
+    chosen.
+
+    :param choices: the choices dict
+    :param default: the default value of the container
+    """
+
+    def __init__(self, choices, default=required, **kwargs):
+        super(Choice, self).__init__(**kwargs)
+        self._choices = choices
+        self._default = default
+
+    def populate_argparse(self, parser, name):
+        choice = self
+        class Action(argparse.Action):
+            def __init__(self, **kwargs):
+                super(Action, self).__init__(**kwargs)
+                self._const = kwargs.get('const', None)
+            def __call__(self, parser, namespace, values, option_string=None):
+                if self._const is not None:
+                    choice._argparse_value = ConfigValue(name, self._const)
+                else:
+                    choice._argparse_value = ConfigValue(name, values)
+
+        if self._argparse_names:
+            parser.add_argument(*self._argparse_names, action=Action,
+                                choices=self._choices.keys(),
+                                metavar=self._argparse_metavar,
+                                help=self._argparse_help)
+
+    def validate(self, value):
+        if self._argparse_value is not None:
+            value = self._argparse_value
+        if value is None:
+            if self._default is required:
+                raise ValidationError('this value is required')
+            else:
+                return ConfigValue(None, self._default)
+        else:
+            if isinstance(value.value, list):
+                if len(value.value) == 1:
+                    value.value = value.value[0]
+                else:
+                    raise ValidationError('%r is a list' % value.value,
+                                          position=value.position)
+            if value.value in self._choices:
+                return ConfigValue(value.name, self._choices[value.value],
+                                   position=value.position)
+            else:
+                choices = ', '.join(repr(x) for x in self._choices)
+                raise ValidationError('bad choice (must be one of %s)' % choices)
+
+
 class List(ArgparseContainer):
 
     """ A list container used to store a list of scalar value of specified type.
