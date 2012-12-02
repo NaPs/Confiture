@@ -72,8 +72,9 @@ class DotconfLexer(object):
     >>> print lexer.next()
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, encoding='utf-8', **kwargs):
         self._lexer = lex.lex(module=self, **kwargs)
+        self._encoding = encoding
 
     #
     # Tokens definition
@@ -105,7 +106,7 @@ class DotconfLexer(object):
     def t_TEXT(self, token):
         r'(["]([\\]["]|[^"]|)*["]|[\']([\\][\']|[^\'])*[\'])'
         value = token.value[1:-1].replace('\\' + token.value[0], token.value[0])
-        token.value = value
+        token.value = value.decode(self._encoding)
         # Count the lines in the string:
         token.lexer.lineno += value.count('\n')
         return token

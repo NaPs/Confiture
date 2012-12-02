@@ -119,11 +119,15 @@ class String(Type):
 
     """
 
-    def __init__(self):
+    def __init__(self, encoding=None):
         super(String, self).__init__()
+        self._encoding = encoding
 
     def validate(self, value):
-        return str(value)
+        if self._encoding is not None:
+            value = value.encode(self._encoding)
+        return value
+
 
     def cast(self, value):
         return value
