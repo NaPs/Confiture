@@ -273,7 +273,7 @@ class DotconfParser(object):
     def p_section_content_include(self, p):
         """section_content : section_content INCLUDE TEXT"""
         for external in self._external_opener(p[3]):
-            p[1] += list(external.iterchildren())
+            p[1] += list(external.iterflatchildren())
         p[0] = p[1]
 
     def p_section(self, p):

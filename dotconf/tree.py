@@ -101,13 +101,18 @@ class ConfigSection(object):
 
     def iterchildren(self):
         """ Iterate over all children of this section.
+        """
+
+        return chain(self._values.itervalues(), self._subsections.itervalues())
+
+    def iterflatchildren(self):
+        """ Iterate over all children of this section, not grouping sections.
 
         ..note::
 
             This is used for the include feature of parser.
         """
-
-        return chain(self._values.itervalues(), self._subsections.itervalues())
+        return chain(self._values.itervalues(), *self._subsections.itervalues())
 
     def iteritems(self):
         """ Like :meth:``iterchildren`` but return a couple (key, child).
