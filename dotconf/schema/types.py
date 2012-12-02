@@ -138,8 +138,8 @@ class _BaseRegex(String):
     """ Base class for regex types.
     """
 
-    def __init__(self, regex, error='value doesn\'t match'):
-        super(String, self).__init__()
+    def __init__(self, regex, error='value doesn\'t match', **kwargs):
+        super(_BaseRegex, self).__init__(**kwargs)
         self._regex = re.compile(regex)
         self._error = error
 
@@ -182,8 +182,8 @@ class RegexPattern(String):
         match = '/[a-z]+(-[a-z]+)?\.css'
     """
 
-    def __init__(self, flags=0):
-        super(String, self).__init__()
+    def __init__(self, flags=0, **kwargs):
+        super(RegexPattern, self).__init__(**kwargs)
         self.flags = flags
 
     def validate(self, value):
@@ -366,8 +366,8 @@ class Eval(String):
         by the user, like __import__("sys").exit(). Use it at your own risk.
     """
 
-    def __init__(self, locals=None, globals=None):
-        super(String, self).__init__()
+    def __init__(self, locals=None, globals=None, **kwargs):
+        super(Eval, self).__init__(**kwargs)
         if locals is None:
             self._locals = {}
         else:
