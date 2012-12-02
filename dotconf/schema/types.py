@@ -211,10 +211,10 @@ class IPAddress(String):
         interface = "127.0.0.1"
     """
 
-    def __init__(self, version=None):
+    def __init__(self, version=None, **kwargs):
         if not IPADDR_ENABLED:
             raise RuntimeError('You must install the ipaddr package to use this type')
-        super(IPAddress, self).__init__()
+        super(IPAddress, self).__init__(**kwargs)
         self._version = version
 
     def validate(self, value):
@@ -278,13 +278,13 @@ class IPSocketAddress(String):
         interface = "0.0.0.0:80"
     """
 
-    def __init__(self, default_addr='127.0.0.1', default_port=None, version=None):
+    def __init__(self, default_addr='127.0.0.1', default_port=None, version=None, **kwargs):
         if not IPADDR_ENABLED:
             raise RuntimeError('You must install the ipaddr package to use this type')
         self._default_addr = default_addr
         self._default_port = default_port
         self._version = version
-        super(IPSocketAddress, self).__init__()
+        super(IPSocketAddress, self).__init__(**kwargs)
 
     def validate(self, value):
         raw_addr, _, raw_port = value.partition(':')
