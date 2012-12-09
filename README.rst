@@ -228,12 +228,7 @@ A note on versioning
 
 Dotconf use a two numbers X.Y versioning. The Y part is incremented by one on
 each release. The X part is used as API compatibility indicator and will be
-incremented each time the API is broken. When this part is incremented, the Y
-part is *not* reseted, but also incremented. So if the current version is
-1.12, and the API broken, the next release will be 2.13.
-
-This particular versioning allow to backport features and bugfix with old API
-(eg: 1.12 have same features than 2.12, modulo the API changes).
+incremented each time the API is broken.
 
 
 Contribute
