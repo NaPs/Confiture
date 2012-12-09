@@ -167,10 +167,27 @@ TODO
 Changelog
 ---------
 
-v1.6 (not yet released)
-~~~~~~~~~~~~~~~~~~~~~~~
+v1.6 released on 09/12/12
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
--
+This second stable release bring some bug fixes and features, the API has not
+been broken. I also registered the project on travis-ci and I will try to
+improve the test coverage for the next release.
+
+Changes:
+
+- Added Choice container
+- Added a from_filename constructor the the Dotconf class
+- Added encoding management (by default, files are parsed in UTF-8)
+- Added continuous integration with travis
+- Fixed bug with Float type validation
+- Fixed an error when a section is included by an external file (thanks to
+  DuanmuChun for its bug report and help to fix it)
+- Fixed other minor bugs
+
+New contributors:
+
+- DuanmuChun (bug report and help to fix it)
 
 v1.5 released on 14/04/2012
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
