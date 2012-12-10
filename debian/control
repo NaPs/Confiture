@@ -9,7 +9,7 @@ Standards-Version: 3.9.1
 Package: python-dotconf
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}, python-ply, python-argparse
-Suggests: python-nose
+Suggests: python-pytest
 XB-Python-Version: ${python:Versions}
 Description: Advanced configuration file parser for Python
  Dotconf is an advanced configuration file parser for Python allowing
