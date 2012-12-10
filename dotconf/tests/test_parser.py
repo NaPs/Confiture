@@ -3,8 +3,6 @@
 
 from dotconf.parser import DotconfLexer, DotconfParser
 
-from nose.tools import eq_
-
 
 def test_lexer():
     #          Test string            Expected tok     Expected tok value
@@ -29,8 +27,8 @@ def check_token(test, expected_type, expected_value):
     lexer = DotconfLexer()
     lexer.input(test)
     token = lexer.next()
-    eq_(token.type, expected_type)
-    eq_(token.value, expected_value)
+    assert token.type == expected_type
+    assert token.value == expected_value
 
 def test_parser_basic():
     test = '''
@@ -39,7 +37,7 @@ def test_parser_basic():
     '''
     parser = DotconfParser(test)
     output = parser.parse()
-    eq_(output.get('daemon'), True)
+    assert output.get('daemon') is True
 
 def test_parser_list():
     test = '''
@@ -55,11 +53,11 @@ def test_parser_list():
     '''
     parser = DotconfParser(test)
     output = parser.parse()
-    eq_(output.get('list1'), [1, 2, 3])
-    eq_(output.get('list2'), [1, 2, 3])
-    eq_(output.get('list3'), [1])
-    eq_(output.get('list4'), [1, 2, 3])
-    eq_(output.get('list5'), [1, 2, 3])
+    assert output.get('list1') == [1, 2, 3]
+    assert output.get('list2') == [1, 2, 3]
+    assert output.get('list3') == [1]
+    assert output.get('list4') == [1, 2, 3]
+    assert output.get('list5') == [1, 2, 3]
 
 def test_parser_section():
     test = '''
@@ -71,9 +69,9 @@ def test_parser_section():
     '''
     parser = DotconfParser(test)
     output = parser.parse()
-    eq_(tuple(output.subsections('section1'))[0].get('key'), 'test')
-    eq_(tuple(output.subsections('section2'))[0].args, ['arg'])
-    eq_(tuple(output.subsections('section3'))[0].args, ['arg1', 'arg2'])
+    assert tuple(output.subsections('section1'))[0].get('key') == 'test'
+    assert tuple(output.subsections('section2'))[0].args == ['arg']
+    assert tuple(output.subsections('section3'))[0].args == ['arg1', 'arg2']
 
 def test_parser_empty():
     test = ''''''
