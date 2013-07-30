@@ -22,6 +22,7 @@ class Position(object):
     def __str__(self):
         return 'in %s, line %d, position %d' % (self.file, self.lineno, self.pos)
 
+
 class ConfigValue(object):
 
     """ Represent a value in the configuration.

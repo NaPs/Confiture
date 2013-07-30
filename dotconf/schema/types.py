@@ -133,7 +133,6 @@ class String(Type):
             value = value.encode(self._encoding)
         return value
 
-
     def cast(self, value):
         return value
 
@@ -314,7 +313,6 @@ class IPSocketAddress(String):
             raise ValidationError('%r is not a port (not in 1 - 65535 range)' % port)
 
         return self.Address(addr, port)
-
 
     class Address(object):
 

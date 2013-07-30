@@ -34,10 +34,13 @@ class Value(ArgparseContainer):
 
     def populate_argparse(self, parser, name):
         value = self
+
         class Action(argparse.Action):
+
             def __init__(self, **kwargs):
                 super(Action, self).__init__(**kwargs)
                 self._const = kwargs.get('const', None)
+
             def __call__(self, parser, namespace, values, option_string=None):
                 if self._const is not None:
                     value._argparse_value = ConfigValue(name, self._const)
@@ -103,10 +106,13 @@ class Choice(ArgparseContainer):
 
     def populate_argparse(self, parser, name):
         choice = self
+
         class Action(argparse.Action):
+
             def __init__(self, **kwargs):
                 super(Action, self).__init__(**kwargs)
                 self._const = kwargs.get('const', None)
+
             def __call__(self, parser, namespace, values, option_string=None):
                 if self._const is not None:
                     choice._argparse_value = ConfigValue(name, self._const)
@@ -157,9 +163,12 @@ class List(ArgparseContainer):
 
     def populate_argparse(self, parser, name):
         value = self
+
         class Action(argparse.Action):
+
             def __call__(self, parser, namespace, values, option_string=None):
                 value._argparse_value = ConfigValue(name, values)
+
         if self._argparse_names:
             nargs = '*'
             parser.add_argument(*self._argparse_names, action=Action,
@@ -206,9 +215,12 @@ class Array(List):
 
     def populate_argparse(self, parser, name):
         value = self
+
         class Action(argparse.Action):
+
             def __call__(self, parser, namespace, values, option_string=None):
                 value._argparse_value = ConfigValue(name, values)
+
         if self._argparse_names:
             parser.add_argument(*self._argparse_names, action=Action,
                                 type=self._type.cast, nargs=self._size,
@@ -239,9 +251,12 @@ class TypedArray(ArgparseContainer):
 
     def populate_argparse(self, parser, name):
         value = self
+
         class Action(argparse.Action):
+
             def __call__(self, parser, namespace, values, option_string=None):
                 value._argparse_value = ConfigValue(name, values)
+
         if self._argparse_names:
             nargs = '*'
             parser.add_argument(*self._argparse_names, action=Action,

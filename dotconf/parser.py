@@ -132,7 +132,6 @@ class DotconfLexer(object):
                             self._lexer.lexpos)
         raise ParsingError('Illegal character %r' % token.value[0], position)
 
-
     #
     # Public methods
     #
@@ -147,7 +146,6 @@ class DotconfLexer(object):
             last_cr = 0
         column = (lexpos - last_cr)
         return column
-
 
     #
     # Bindings to the internal _lexer object
@@ -169,6 +167,7 @@ class DotconfLexer(object):
             raise AttributeError("'%s' object has no attribute '%s'" % (self, name))
         else:
             return attr
+
 
 #
 # Parser
@@ -321,7 +320,6 @@ class DotconfParser(object):
         column = self._lexer.column(token.lexpos)
         pos = Position(self._input_name, token.lineno, column)
         raise ParsingError('Syntax error near of "%s"' % token.value, pos)
-
 
     #
     # Bindings to the internel _parser object
