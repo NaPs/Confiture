@@ -1,11 +1,14 @@
 """ Builtin containers of dotconf.schema
 """
 
+import sys
 try:
     import argparse
 except ImportError:
     argparse = None
-from itertools import izip
+
+if sys.version_info[0] < 3:
+    from itertools import izip as zip
 
 from dotconf.tree import ConfigSection, ConfigValue
 from dotconf.schema import Container, ArgparseContainer, ValidationError
@@ -112,7 +115,7 @@ class Choice(ArgparseContainer):
 
         if self._argparse_names:
             parser.add_argument(*self._argparse_names, action=Action,
-                                choices=self._choices.keys(),
+                                choices=list(self._choices.keys()),
                                 metavar=self._argparse_metavar,
                                 help=self._argparse_help)
 
@@ -263,7 +266,7 @@ class TypedArray(ArgparseContainer):
                 raise ValidationError('bad array size (should be %d, found %d '
                                       'items)' % (len(self._types), len(values)))
 
-            for i, (item, item_type) in enumerate(izip(values, self._types)):
+            for i, (item, item_type) in enumerate(zip(values, self._types)):
                 try:
                     item = item_type.validate(item)
                 except ValidationError as err:
@@ -296,7 +299,7 @@ class Section(Container):
             if hasattr(cls, '_meta'):
                 self.meta.update(cls._meta)
             # Update fields from class:
-            for key, value in cls.__dict__.iteritems():
+            for key, value in cls.__dict__.items():
                 if isinstance(value, Container):
                     self.keys[key] = value
 
@@ -316,7 +319,7 @@ class Section(Container):
         """ Populate an argparse parser.
         """
 
-        for name, container in self.keys.iteritems():
+        for name, container in self.keys.items():
             container.populate_argparse(parser, name=name)
 
     def validate(self, section):
@@ -340,7 +343,7 @@ class Section(Container):
             else:
                 validated_section.args = validated_args
         # Validate the section's children:
-        for name, container in self.keys.iteritems():
+        for name, container in self.keys.items():
             if isinstance(container, Section):
                 # Validate subsections of this section:
                 subsections = list(section.subsections(name))

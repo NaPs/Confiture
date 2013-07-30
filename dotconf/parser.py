@@ -1,7 +1,7 @@
 """ Dotconf lexer and parser.
 """
 
-
+import sys
 from glob import glob
 
 import ply.lex as lex
@@ -106,7 +106,7 @@ class DotconfLexer(object):
     def t_TEXT(self, token):
         r'(["]([\\]["]|[^"]|)*["]|[\']([\\][\']|[^\'])*[\'])'
         value = token.value[1:-1].replace('\\' + token.value[0], token.value[0])
-        token.value = value.decode(self._encoding)
+        token.value = value
         # Count the lines in the string:
         token.lexer.lineno += value.count('\n')
         return token
@@ -154,6 +154,12 @@ class DotconfLexer(object):
     #
 
     def input(self, input):
+        if sys.version_info[0] >= 3:
+            if isinstance(input, bytes):
+                input = input.decode(self._encoding)
+        else:
+            if isinstance(input, str):
+                input = input.decode(self._encoding)
         self._current_input = input
         return self._lexer.input(input)
 

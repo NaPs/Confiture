@@ -2,8 +2,14 @@
 """
 
 import re
-import urlparse
+import sys
+import numbers
 import socket
+
+if sys.version_info[0] >= 3:
+    import urllib.parse as urlparse
+else:
+    import urlparse
 
 try:
     import ipaddr
@@ -21,8 +27,7 @@ class Number(Type):
     """
 
     def validate(self, value):
-        if not isinstance(value, int) and not isinstance(value, float) \
-            and not isinstance(value, long):
+        if not isinstance(value, numbers.Number):
             raise ValidationError('%r is not a number' % value)
         else:
             return value

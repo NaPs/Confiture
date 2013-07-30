@@ -103,7 +103,7 @@ class ConfigSection(object):
         """ Iterate over all children of this section.
         """
 
-        return chain(self._values.itervalues(), self._subsections.itervalues())
+        return chain(iter(self._values.values()), iter(self._subsections.values()))
 
     def iterflatchildren(self):
         """ Iterate over all children of this section, not grouping sections.
@@ -112,13 +112,13 @@ class ConfigSection(object):
 
             This is used for the include feature of parser.
         """
-        return chain(self._values.itervalues(), *self._subsections.itervalues())
+        return chain(iter(self._values.values()), *iter(self._subsections.values()))
 
     def iteritems(self):
         """ Like :meth:``iterchildren`` but return a couple (key, child).
         """
 
-        return chain(self._values.iteritems(), self._subsections.iteritems())
+        return chain(iter(self._values.items()), iter(self._subsections.items()))
 
     #
     # Public API -- User methods
@@ -180,10 +180,10 @@ class ConfigSection(object):
         """ Represent the section (and subsections) as a dict.
         """
         output = {}
-        for name, subsections in self._subsections.iteritems():
+        for name, subsections in self._subsections.items():
             output[name] = []
             for subsection in subsections:
                 output[name].append(subsection.to_dict())
-        for name, value in self._values.iteritems():
+        for name, value in self._values.items():
             output[name] = value.value
         return output
