@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.7'
+version = '1.8~dev'
 ldesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 
 setup(name='dotconf',
