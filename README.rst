@@ -167,10 +167,15 @@ TODO
 Changelog
 ---------
 
-v1.7 (not yet released)
-~~~~~~~~~~~~~~~~~~~~~~~
+v1.7 released on 31/07/13
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
--
+The major (and almost the only) change of this release is the compatibility with
+Python 3. This work has been done with the help of 2to3 with some thing fixed
+manually. Enjoy!
+
+- Added compatibility with Python 3
+- Now use py.test instead of nosetests
 
 v1.6 released on 09/12/12
 ~~~~~~~~~~~~~~~~~~~~~~~~~
