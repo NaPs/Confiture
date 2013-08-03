@@ -14,7 +14,7 @@ class Dotconf(object):
     @classmethod
     def from_filename(cls, filename, **kwargs):
         fconf = open(filename)
-        return cls(fconf.read())
+        return cls(fconf.read(), **kwargs)
 
     def _parse(self):
         parser = DotconfParser(self._config, debug=False, write_tables=False,
