@@ -348,7 +348,7 @@ class Section(Container):
         if self.meta['args'] is None and section.args is not None:
             raise ValidationError('section %s, this section does not take '
                                   'any argument' % section.name,
-                                  position=section.args.position)
+                                  position=section.position)
         elif self.meta['args'] is not None:
             try:
                 validated_args = self.meta['args'].validate(section.args_raw)
