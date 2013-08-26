@@ -58,7 +58,7 @@ This is an example of what you can do with Dotconf::
 Then, to use the parser::
 
     >>> conf = '''
-    ... daemon = True
+    ... daemon = yes
     ... pidfile = '/var/run/myapp.pid'
     ... interface = '0.0.0.0:80'
     ... interface_ssl = '0.0.0.0:443'

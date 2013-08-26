@@ -38,7 +38,7 @@ Example
 This is an example of configuration file for an imaginary web server::
 
 
-    daemon = True
+    daemon = yes
     pidfile = '/var/run/myapp.pid'
     interface = '0.0.0.0:80'
     interface_ssl = '0.0.0.0:443'
