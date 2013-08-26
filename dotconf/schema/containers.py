@@ -377,11 +377,12 @@ class Section(Container):
                 for subsection in subsections:
                     # Check for unique option:
                     if container.meta['unique']:
-                        if tuple(subsection.args) in args:
+                        args_value = None if subsection.args is None else tuple(subsection.args)
+                        if args_value in args:
                             msg = 'section %s, section must be unique' % name
                             raise ValidationError(msg, position=subsection.position)
                         else:
-                            args.add(tuple(subsection.args))
+                            args.add(args_value)
                     # Container validation:
                     validated_subsection = container.validate(subsection)
                     validated_section.register(validated_subsection, name=name)
