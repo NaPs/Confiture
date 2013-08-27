@@ -63,7 +63,7 @@ This is an example of configuration file for an imaginary web server::
 You can access to each values using the developer friendly API::
 
     >>> from dotconf import Dotconf
-    >>> parsed_conf = Dotconf.from_file('mywebserver.conf')
+    >>> parsed_conf = Dotconf.from_filename('mywebserver.conf').parse()
     >>> print parsed_conf.get('daemon', False)
     True
 
@@ -71,7 +71,7 @@ You can access to each values using the developer friendly API::
 Even more exciting, you can create a validation schema to avoid you the
 painful chore of manual configuration file validation::
 
-    from dotconf.schema import many, once
+    from dotconf.schema.containers import many, once
     from dotconf.schema.containers import Section, Value
     from dotconf.schema.types import Boolean, Integer, Float, String
 
@@ -87,13 +87,12 @@ painful chore of manual configuration file validation::
         user = UserSection()
 
     class VirtualHostSection(Section):
-        base_path = Value(String())
         enable_ssl = Value(Boolean(), default=False)
         path = PathSection()
         _meta = {'repeat': many, 'unique': True}
 
     class MyWebserverConfiguration(Section):
-        daemon = Value(Boolean()default=False)
+        daemon = Value(Boolean(), default=False)
         pidfile = Value(String(), default=None)
         interface = Value(String(), default='127.0.0.1:80')
         interface_ssl = Value(String(), default='127.0.0.1:443')
@@ -101,21 +100,44 @@ painful chore of manual configuration file validation::
 
 Then you can use the API exactly as if it was not validated::
 
+    >>> conf = '''
+    ... daemon = yes
+    ... pidfile = '/var/run/myapp.pid'
+    ... interface = '0.0.0.0:80'
+    ... interface_ssl = '0.0.0.0:443'
+    ...
+    ... host 'example.org' {
+    ...     path '/' {
+    ...         rate_limit = 30
+    ...     }
+    ... }
+    ...
+    ... host 'protected.example.org' {
+    ...     enable_ssl = yes
+    ...
+    ...     path '/files' {
+    ...         enable_auth = yes
+    ...         user 'foo' {
+    ...             password = 'bar'
+    ...         }
+    ...     }
+    ... }
+    ... '''
     >>> from dotconf import Dotconf
     >>> from myconfschema import MyWebserverConfiguration
-    >>> parsed_conf = Dotconf(conf, schema=MyWebserverConfiguration)
+    >>> parsed_conf = Dotconf(conf, schema=MyWebserverConfiguration()).parse()
     >>> print 'daemon:', parsed_conf.get('daemon')
     daemon: True
     >>> for vhost in parsed_conf.subsections('host'):
-    >>>     print vhost.args[0]
+    >>>     print vhost.args
     >>>     if vhost.get('enable_ssl'):
     >>>         print '  SSL enabled'
     >>>     for path in vhost.subsections('path'):
-    >>>         print '  ' + path.args[0]
+    >>>         print '  ' + path.args
     >>>         if path.get('enable_auth'):
     >>>             print '    Following users can access to this directory:'
     >>>             for user in path.subsections('user'):
-    >>>                 print '     - ' + user.args[0]
+    >>>                 print '     - ' + user.args
     >>>
     example.org
       /

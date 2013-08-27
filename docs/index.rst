@@ -27,7 +27,7 @@ Example
 
 This is an example of what you can do with Dotconf::
 
-    from dotconf.schema import many, once
+    from dotconf.schema.containers import many, once
     from dotconf.schema.containers import Section, Value
     from dotconf.schema.types import Boolean, Integer, Float, String
 
@@ -43,13 +43,12 @@ This is an example of what you can do with Dotconf::
         user = UserSection()
 
     class VirtualHostSection(Section):
-        base_path = Value(String())
         enable_ssl = Value(Boolean(), default=False)
         path = PathSection()
         _meta = {'repeat': many, 'unique': True}
 
     class MyWebserverConfiguration(Section):
-        daemon = Value(Boolean()default=False)
+        daemon = Value(Boolean(), default=False)
         pidfile = Value(String(), default=None)
         interface = Value(String(), default='127.0.0.1:80')
         interface_ssl = Value(String(), default='127.0.0.1:443')
@@ -62,16 +61,16 @@ Then, to use the parser::
     ... pidfile = '/var/run/myapp.pid'
     ... interface = '0.0.0.0:80'
     ... interface_ssl = '0.0.0.0:443'
-    ... 
+    ...
     ... host 'example.org' {
     ...     path '/' {
     ...         rate_limit = 30
     ...     }
     ... }
-    ... 
+    ...
     ... host 'protected.example.org' {
     ...     enable_ssl = yes
-    ... 
+    ...
     ...     path '/files' {
     ...         enable_auth = yes
     ...         user 'foo' {
@@ -82,19 +81,19 @@ Then, to use the parser::
     ... '''
     >>> from dotconf import Dotconf
     >>> from myconfschema import MyWebserverConfiguration
-    >>> parsed_conf = Dotconf(conf, schema=MyWebserverConfiguration)
+    >>> parsed_conf = Dotconf(conf, schema=MyWebserverConfiguration()).parse()
     >>> print 'daemon:', parsed_conf.get('daemon')
     True
     >>> for vhost in parsed_conf.subsections('host'):
-    >>>     print vhost.args[0]
+    >>>     print vhost.args
     >>>     if vhost.get('enable_ssl'):
     >>>         print '  SSL enabled'
     >>>     for path in vhost.subsections('path'):
-    >>>         print '  ' + path.args[0]
+    >>>         print '  ' + path.args
     >>>         if path.get('enable_auth'):
     >>>             print '    Following users can access to this directory:'
     >>>             for user in path.subsections('user'):
-    >>>                 print '     - ' + user.args[0]
+    >>>                 print '     - ' + user.args
     >>>
     example.org
       /
