@@ -7,18 +7,20 @@ from dotconf.parser import DotconfParser, yacc
 
 class Dotconf(object):
 
-    def __init__(self, config, schema=None):
+    def __init__(self, config, schema=None, input_name='<unknown>'):
         self._config = config
         self._schema = schema
+        self._input_name = input_name
 
     @classmethod
     def from_filename(cls, filename, **kwargs):
         fconf = open(filename)
+        kwargs['input_name'] = filename
         return cls(fconf.read(), **kwargs)
 
     def _parse(self):
         parser = DotconfParser(self._config, debug=False, write_tables=False,
-                               errorlog=yacc.NullLogger())
+                               errorlog=yacc.NullLogger(), input_name=self._input_name)
 
         return parser.parse()
 
