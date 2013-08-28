@@ -72,9 +72,10 @@ class DotconfLexer(object):
     >>> print lexer.next()
     """
 
-    def __init__(self, encoding='utf-8', **kwargs):
+    def __init__(self, encoding='utf-8', input_name='<unknown>', **kwargs):
         self._lexer = lex.lex(module=self, **kwargs)
         self._encoding = encoding
+        self._input_name = input_name
 
     #
     # Tokens definition
@@ -185,7 +186,7 @@ class DotconfParser(object):
         self._input_name = kwargs.pop('input_name', '<unknown>')
         self._external_opener = kwargs.pop('external_opener',
                                            default_external_opener)
-        self._lexer = kwargs.pop('lexer', DotconfLexer())
+        self._lexer = kwargs.pop('lexer', DotconfLexer(input_name=self._input_name))
         self._parser = yacc.yacc(module=self, **kwargs)
         self._old_line = 0
 
