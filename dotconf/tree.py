@@ -6,6 +6,11 @@ from itertools import chain
 from collections import defaultdict
 
 
+class MultipleSectionsWithThisNameError(Exception):
+    """ Exception raised if only one section is expected, but multiple returned.
+    """
+
+
 class Position(object):
 
     """ Position of a statement in a file.
@@ -161,6 +166,22 @@ class ConfigSection(object):
         """ Iterate over sub-sections with the specified name.
         """
         return iter(self._subsections[name])
+
+    def subsection(self, name, default=None):
+        """ Get sub-section with the specified name.
+
+        Work like subsections method, but can only be applied if there is
+        exactly one subsection with the specified name present. Otherwise,
+        a MultipleSectionsWithThisNameError exception is raised. This function
+        is useful if you do not need the list support for sections.
+        """
+        if len(self._subsections.get(name, [])) > 1:
+            msg = '%s.subsection can\'t return multiple sections' % self.__class__.__name__
+            raise MultipleSectionsWithThisNameError(msg)
+        elif name not in self._subsections:
+            return default
+        else:
+            return self._subsections[name][0]
 
     def get(self, name, default=None, raw=True):
         """ Get the value with the specified name or return default.
