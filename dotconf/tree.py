@@ -120,11 +120,20 @@ class ConfigSection(object):
         """
         return chain(iter(self._values.values()), *iter(self._subsections.values()))
 
-    def iteritems(self):
+    def iteritems(self, expand_sections=False):
         """ Like :meth:``iterchildren`` but return a couple (key, child).
+
+        If expand_sections is True, the method will return a couple for each
+        occurrence of a section instead of returning a couple with a list
+        of section.
         """
 
-        return chain(iter(self._values.items()), iter(self._subsections.items()))
+        if expand_sections:
+            return chain(iter(self._values.items()),
+                         # Expand {'x': [1, 2]}.items() into ((x, 1), (x, 2)):
+                         ((k, v) for k, l in self._subsections.items() for v in l))
+        else:
+            return chain(iter(self._values.items()), iter(self._subsections.items()))
 
     #
     # Public API -- User methods
