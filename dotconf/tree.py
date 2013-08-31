@@ -178,7 +178,7 @@ class ConfigSection(object):
         if len(self._subsections.get(name, [])) > 1:
             msg = '%s.subsection can\'t return multiple sections' % self.__class__.__name__
             raise MultipleSectionsWithThisNameError(msg)
-        elif name not in self._subsections:
+        elif name not in self._subsections or len(self._subsections[name]) == 0:
             return default
         else:
             return self._subsections[name][0]
