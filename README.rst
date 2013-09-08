@@ -189,10 +189,26 @@ TODO
 Changelog
 ---------
 
-v1.8 (not yet released)
-~~~~~~~~~~~~~~~~~~~~~~~
+v1.8 08/09/13
+~~~~~~~~~~~~~
 
--
+This new release bring a lot of bugfixes all reported by Stefan Tschiggerl.
+Thanks to him for its time and its help to enhance Dotconf.
+
+Changes:
+
+- Fixed a bug where from_filename is not passing extra
+- Fixed examples in readme and docs
+- Fixed bad API usage in containers' argument validation
+- Handle the uniqueness validation of empty args
+- Added single subsection access method (eg: section.subsection('foo'))
+- Fixed optional section without occurrence not working
+- Fixed a bug when subsection method is used twice with the same name
+- Fixed traceback when a section is not in schema
+
+New contributors:
+
+- Stefan Tschiggerl (bug report and fixes)
 
 v1.7 released on 31/07/13
 ~~~~~~~~~~~~~~~~~~~~~~~~~
