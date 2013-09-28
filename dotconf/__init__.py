@@ -14,7 +14,7 @@ class Dotconf(object):
 
     @classmethod
     def from_filename(cls, filename, **kwargs):
-        fconf = open(filename)
+        fconf = open(filename, 'Ur')
         kwargs['input_name'] = filename
         return cls(fconf.read(), **kwargs)
 
