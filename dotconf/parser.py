@@ -318,6 +318,8 @@ class DotconfParser(object):
         pass
 
     def p_error(self, token):
+        if token is None:
+            raise ParsingError('Unexpected end of file')
         column = self._lexer.column(token.lexpos)
         pos = Position(self._input_name, token.lineno, column)
         raise ParsingError('Syntax error near of "%s"' % token.value, pos)

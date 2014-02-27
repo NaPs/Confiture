@@ -1,7 +1,9 @@
 """ Dotconf's parser tests.
 """
 
-from dotconf.parser import DotconfLexer, DotconfParser
+import pytest
+
+from dotconf.parser import DotconfLexer, DotconfParser, ParsingError
 
 
 def test_lexer():
@@ -77,3 +79,11 @@ def test_parser_empty():
     test = ''''''
     parser = DotconfParser(test)
     output = parser.parse()
+
+def test_parser_end_of_file():
+    test = '''
+    section {
+    '''
+    parser = DotconfParser(test)
+    with pytest.raises(ParsingError):
+        parser.parse()
