@@ -13,25 +13,29 @@ The full documentation can be found here: http://confiture.readthedocs.org
 .. image:: https://www.ohloh.net/p/python-confiture/widgets/project_thin_badge.gif
    :target: https://www.ohloh.net/p/python-confiture?ref=sample
 
+.. image:: https://travis-ci.org/NaPs/Confiture.svg?branch=master
+   :target: https://travis-ci.org/NaPs/Confiture
+
 
 Features
 --------
 
-- Configuration format kept as simple as possible.
-- Developer friendly APIs.
+- Configuration format kept as simple as possible
+- Developer friendly APIs
+- Python 2 and 3 compatibility
 - Types are expressed in the syntax, so the parser can guess it without
-  validation.
-- Four primitive types: string, number, boolean, or list.
+  validation
+- Four primitive types: string, number, boolean, or list
 - More complex composite types can be created using the schema validation
-  system.
+  system
 - Nested section of any deep. Sections can take a special "argument" value
-  (look at the example).
+  (look at the example)
 - Schema validation system, all schema can be defined using declarative or
-  imperative way.
-- External file include with globbing.
-- Integration with argparse.
+  imperative way
+- External file include with globbing
+- Integration with argparse
 - Tests (only parser is covered yet)
-- Released under MIT license.
+- Released under MIT license
 
 
 Example
