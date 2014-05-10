@@ -2,6 +2,8 @@
 Confiture
 =========
 
+.. image:: https://raw.githubusercontent.com/NaPs/Confiture/master/docs/_static/images/confiture_logo.png
+
 Confiture (formerly Dotconf) is an advanced configuration parser which allow
 nested sections to any level, typed values in syntax, file include and so more.
 Confiture is also shipped with a powerful schema validation system.
