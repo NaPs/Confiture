@@ -1,14 +1,14 @@
 import sys
 from pprint import pprint
 
-from dotconf import Dotconf
-from dotconf.schema import ValidationError
-from dotconf.parser import ParsingError
-from dotconf.schema.containers import Section, Value, many
-from dotconf.schema.types import Boolean, Integer, String
+from confiture import Confiture
+from confiture.schema import ValidationError
+from confiture.parser import ParsingError
+from confiture.schema.containers import Section, Value, many
+from confiture.schema.types import Boolean, Integer, String
 
 #
-# Our Dotconf schemas:
+# Our Confiture schemas:
 #
 
 class GenericPluginSchema(Section):
@@ -100,7 +100,7 @@ if __name__ == '__main__':
     enabled_plugins = []
 
     # Parse the global configuration:
-    config = Dotconf(TEST_CONFIG, schema=MainConfigurationSchema())
+    config = Confiture(TEST_CONFIG, schema=MainConfigurationSchema())
     try:
         pconfig = config.parse()
     except (ValidationError, ParsingError) as err:

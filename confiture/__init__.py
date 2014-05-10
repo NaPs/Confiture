@@ -1,11 +1,11 @@
-""" Dotconf is an advanced configuration parser for Python.
+""" Confiture is an advanced configuration parser for Python.
 """
 
 
-from dotconf.parser import DotconfParser, yacc
+from confiture.parser import ConfitureParser, yacc
 
 
-class Dotconf(object):
+class Confiture(object):
 
     def __init__(self, config, schema=None, input_name='<unknown>'):
         self._config = config
@@ -19,7 +19,7 @@ class Dotconf(object):
         return cls(fconf.read(), **kwargs)
 
     def _parse(self):
-        parser = DotconfParser(self._config, debug=False, write_tables=False,
+        parser = ConfitureParser(self._config, debug=False, write_tables=False,
                                errorlog=yacc.NullLogger(), input_name=self._input_name)
 
         return parser.parse()

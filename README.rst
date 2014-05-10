@@ -1,15 +1,15 @@
-=======
-Dotconf
-=======
+=========
+Confiture
+=========
 
-Dotconf is an advanced configuration parser which allow nested sections to any
-level, typed values in syntax, file include and so more. Dotconf is also
-shipped with a powerful schema validation system.
+Confiture (formerly Dotconf) is an advanced configuration parser which allow
+nested sections to any level, typed values in syntax, file include and so more.
+Confiture is also shipped with a powerful schema validation system.
 
-The full documentation can be found here: http://dotconf.readthedocs.org
+The full documentation can be found here: http://confiture.readthedocs.org
 
-.. image:: https://www.ohloh.net/p/dotconf-python/widgets/project_thin_badge.gif
-   :target: https://www.ohloh.net/p/dotconf-python?ref=sample
+.. image:: https://www.ohloh.net/p/python-confiture/widgets/project_thin_badge.gif
+   :target: https://www.ohloh.net/p/python-confiture?ref=sample
 
 
 Features
@@ -62,8 +62,8 @@ This is an example of configuration file for an imaginary web server::
 
 You can access to each values using the developer friendly API::
 
-    >>> from dotconf import Dotconf
-    >>> parsed_conf = Dotconf.from_filename('mywebserver.conf').parse()
+    >>> from confiture import Confiture
+    >>> parsed_conf = Confiture.from_filename('mywebserver.conf').parse()
     >>> print parsed_conf.get('daemon', False)
     True
 
@@ -71,9 +71,9 @@ You can access to each values using the developer friendly API::
 Even more exciting, you can create a validation schema to avoid you the
 painful chore of manual configuration file validation::
 
-    from dotconf.schema.containers import many, once
-    from dotconf.schema.containers import Section, Value
-    from dotconf.schema.types import Boolean, Integer, Float, String
+    from confiture.schema.containers import many, once
+    from confiture.schema.containers import Section, Value
+    from confiture.schema.types import Boolean, Integer, Float, String
 
     # Schema definition:
 
@@ -123,9 +123,9 @@ Then you can use the API exactly as if it was not validated::
     ...     }
     ... }
     ... '''
-    >>> from dotconf import Dotconf
+    >>> from confiture import Confiture
     >>> from myconfschema import MyWebserverConfiguration
-    >>> parsed_conf = Dotconf(conf, schema=MyWebserverConfiguration()).parse()
+    >>> parsed_conf = Confiture(conf, schema=MyWebserverConfiguration()).parse()
     >>> print 'daemon:', parsed_conf.get('daemon')
     daemon: True
     >>> for vhost in parsed_conf.subsections('host'):
@@ -150,9 +150,9 @@ Then you can use the API exactly as if it was not validated::
 Setup
 -----
 
-The fastest and more common way to install Dotconf is using pip::
+The fastest and more common way to install Confiture is using pip::
 
-    pip install dotconf
+    pip install confiture
 
 Debian
 ~~~~~~
@@ -170,14 +170,14 @@ Add the Tecknet repositories key in your keyring:
 Then, update and install::
 
     # aptitude update
-    # aptitude install python-dotconf
+    # aptitude install python-confiture
 
 Archlinux
 ~~~~~~~~~
 
-If you use Archlinux, a Dotconf package is available in Aur::
+If you use Archlinux, a Confiture package is available in Aur::
 
-    yaourt -S python2-dotconf
+    yaourt -S python2-confiture
 
 
 TODO
@@ -198,7 +198,7 @@ v1.8 08/09/13
 ~~~~~~~~~~~~~
 
 This new release bring a lot of bugfixes all reported by Stefan Tschiggerl.
-Thanks to him for its time and its help to enhance Dotconf.
+Thanks to him for its time and its help to enhance Confiture.
 
 Changes:
 
@@ -235,7 +235,7 @@ improve the test coverage for the next release.
 Changes:
 
 - Added Choice container
-- Added a from_filename constructor the the Dotconf class
+- Added a from_filename constructor the the Confiture class
 - Added encoding management (by default, files are parsed in UTF-8)
 - Added continuous integration with travis
 - Fixed bug with Float type validation
@@ -250,7 +250,7 @@ New contributors:
 v1.5 released on 14/04/2012
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First stable release of Dotconf has been released, development will now take
+First stable release of Confiture has been released, development will now take
 care of API compatibility. The project status has been changed to "Beta" on the
 PYPI, and should be "Stable" on the next release if no major bug is found.
 Packages will be updated for Debian and Archlinux, feel free to contact me if
@@ -301,7 +301,7 @@ v0.1 released on 24/03/2012
 A note on versioning
 --------------------
 
-Dotconf use a two numbers X.Y versioning. The Y part is incremented by one on
+Confiture use a two numbers X.Y versioning. The Y part is incremented by one on
 each release. The X part is used as API compatibility indicator and will be
 incremented each time the API is broken.
 
@@ -309,10 +309,8 @@ incremented each time the API is broken.
 Contribute
 ----------
 
-You can contribute to Dotconf through these ways:
+You can contribute to Confiture through these ways:
 
-- Main Git repository: https://idevelop.org/p/dotconf/source/tree/master/
-- Bitbucket: https://bitbucket.org/NaPs/dotconf
-- Github: https://github.com/NaPs/Dotconf
+- Github: https://github.com/NaPs/Confiture
 
 Feel free to contact me for any question/suggestion: <antoine@inaps.org>.

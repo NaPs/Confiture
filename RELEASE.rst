@@ -1,6 +1,6 @@
-=========================
-Dotconf release procedure
-=========================
+===========================
+Confiture release procedure
+===========================
 
 Release procedure::
 
@@ -11,7 +11,7 @@ Release procedure::
         the following message:
         > Released version {version}
     [ ] Tag the latest commit with the following message:
-        > Dotconf v{version}
+        > Confiture v{version}
     [ ] Send the update en PYPI: setup.py sdist bdist_egg upload
     [ ] Increment number and add ~dev in setup.py version
     [ ] Increment number and add ~dev in docs/conf.py version

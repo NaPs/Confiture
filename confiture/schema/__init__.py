@@ -1,4 +1,4 @@
-""" Dotconf schema validator.
+""" Confiture schema validator.
 """
 
 

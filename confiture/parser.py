@@ -1,4 +1,4 @@
-""" Dotconf lexer and parser.
+""" Confiture lexer and parser.
 """
 
 import sys
@@ -7,7 +7,7 @@ from glob import glob
 import ply.lex as lex
 import ply.yacc as yacc
 
-from dotconf.tree import ConfigSection, ConfigValue, Position
+from confiture.tree import ConfigSection, ConfigValue, Position
 
 
 UNITS = {'k': 10 ** 3,
@@ -48,7 +48,7 @@ def default_external_opener(locator):
                 external_data = fexternal.read()
         except IOError as err:
             raise ParsingError('Unable to open %s (%s)' % (external, err))
-        parser = DotconfParser(external_data, debug=False, write_tables=False,
+        parser = ConfitureParser(external_data, debug=False, write_tables=False,
                                errorlog=yacc.NullLogger(), input_name=external,
                                external_opener=default_external_opener)
         parsed_externals.append(parser.parse())
@@ -59,7 +59,7 @@ def default_external_opener(locator):
 # Lexer
 #
 
-class DotconfLexer(object):
+class ConfitureLexer(object):
 
     """ Lexer for the DotConf format.
 
@@ -174,19 +174,19 @@ class DotconfLexer(object):
 # Parser
 #
 
-class DotconfParser(object):
+class ConfitureParser(object):
 
-    """ Parser for the Dotconf format.
+    """ Parser for the Confiture format.
     """
 
-    tokens = DotconfLexer.tokens
+    tokens = ConfitureLexer.tokens
 
     def __init__(self, input, **kwargs):
         self._input = input
         self._input_name = kwargs.pop('input_name', '<unknown>')
         self._external_opener = kwargs.pop('external_opener',
                                            default_external_opener)
-        self._lexer = kwargs.pop('lexer', DotconfLexer(input_name=self._input_name))
+        self._lexer = kwargs.pop('lexer', ConfitureLexer(input_name=self._input_name))
         self._parser = yacc.yacc(module=self, **kwargs)
         self._old_line = 0
 

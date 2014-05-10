@@ -1,4 +1,4 @@
-""" Builtin containers of dotconf.schema
+""" Builtin containers of confiture.schema
 """
 
 import sys
@@ -10,8 +10,8 @@ except ImportError:
 if sys.version_info[0] < 3:
     from itertools import izip as zip
 
-from dotconf.tree import ConfigSection, ConfigValue
-from dotconf.schema import Container, ArgparseContainer, ValidationError
+from confiture.tree import ConfigSection, ConfigValue
+from confiture.schema import Container, ArgparseContainer, ValidationError
 
 
 required = object()

@@ -5,25 +5,25 @@ Types
 String based types
 ------------------
 
-.. autoclass:: dotconf.schema.types.String
-.. autoclass:: dotconf.schema.types.Regex
-.. autoclass:: dotconf.schema.types.NamedRegex
-.. autoclass:: dotconf.schema.types.RegexPattern
-.. autoclass:: dotconf.schema.types.IPAddress
-.. autoclass:: dotconf.schema.types.IPNetwork
-.. autoclass:: dotconf.schema.types.Url
-.. autoclass:: dotconf.schema.types.IPSocketAddress
-.. autoclass:: dotconf.schema.types.Eval
+.. autoclass:: confiture.schema.types.String
+.. autoclass:: confiture.schema.types.Regex
+.. autoclass:: confiture.schema.types.NamedRegex
+.. autoclass:: confiture.schema.types.RegexPattern
+.. autoclass:: confiture.schema.types.IPAddress
+.. autoclass:: confiture.schema.types.IPNetwork
+.. autoclass:: confiture.schema.types.Url
+.. autoclass:: confiture.schema.types.IPSocketAddress
+.. autoclass:: confiture.schema.types.Eval
 
 
 Number based types
 ------------------
 
-.. autoclass:: dotconf.schema.types.Integer
-.. autoclass:: dotconf.schema.types.Float
+.. autoclass:: confiture.schema.types.Integer
+.. autoclass:: confiture.schema.types.Float
 
 
 Boolean based types
 -------------------
 
-.. autoclass:: dotconf.schema.types.Boolean
+.. autoclass:: confiture.schema.types.Boolean

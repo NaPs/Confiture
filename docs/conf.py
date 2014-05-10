@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Dotconf documentation build configuration file, created by
+# Confiture documentation build configuration file, created by
 # sphinx-quickstart on Tue Feb 21 19:29:17 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Dotconf'
+project = u'Confiture'
 copyright = u'2012, Antoine Millet'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -167,7 +167,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Dotconfdoc'
+htmlhelp_basename = 'Confituredoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -181,7 +181,7 @@ htmlhelp_basename = 'Dotconfdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Dotconf.tex', u'Dotconf Documentation',
+  ('index', 'Confiture.tex', u'Confiture Documentation',
    u'Antoine Millet', 'manual'),
 ]
 
@@ -214,6 +214,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'dotconf', u'Dotconf Documentation',
+    ('index', 'confiture', u'Confiture Documentation',
      [u'Antoine Millet'], 1)
 ]

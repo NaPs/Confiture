@@ -4,7 +4,7 @@ Containers
 Section container
 -----------------
 
-.. autoclass:: dotconf.schema.containers.Section
+.. autoclass:: confiture.schema.containers.Section
 
 Typically, this class has to be derived to specify accepted key for
 the section::
@@ -110,7 +110,7 @@ Examples:
 - ``(1, None)``: the section mut appear at least once
 
 
-Some shortcut are available in the :mod:`dotconf.schema.containers` module:
+Some shortcut are available in the :mod:`confiture.schema.containers` module:
 
 - ``once`` -> ``(1, 1)``
 - ``many`` -> ``(0, None)``
@@ -130,23 +130,23 @@ available in the validated section.
 Value container
 ---------------
 
-.. autoclass:: dotconf.schema.containers.Value
+.. autoclass:: confiture.schema.containers.Value
 
 
 Choice container
 ----------------
 
-.. autoclass:: dotconf.schema.containers.Choice
+.. autoclass:: confiture.schema.containers.Choice
 
 
 List containers
 ---------------
 
-.. autoclass:: dotconf.schema.containers.List
+.. autoclass:: confiture.schema.containers.List
 
 
 Array containers
 ----------------
 
-.. autoclass:: dotconf.schema.containers.Array
-.. autoclass:: dotconf.schema.containers.TypedArray
+.. autoclass:: confiture.schema.containers.Array
+.. autoclass:: confiture.schema.containers.TypedArray

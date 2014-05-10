@@ -1,10 +1,10 @@
-Welcome to Dotconf's documentation!
+Welcome to Confiture's documentation!
 ===================================
 
-Dotconf is an advanced configuration parsing library which can be used by
-developers who are limited with standard ConfigParser library. Dotconf is also
-shipped with a schema validator which can be used to check the content of your
-application's configuration file before to start.
+Confiture (formerly Dotconf) is an advanced configuration parsing library which
+can be used by developers who are limited with standard ConfigParser library.
+Confiture is also shipped with a schema validator which can be used to check the
+content of your application's configuration file before to start.
 
 
 Features
@@ -25,11 +25,11 @@ Features
 Example
 -------
 
-This is an example of what you can do with Dotconf::
+This is an example of what you can do with Confiture::
 
-    from dotconf.schema.containers import many, once
-    from dotconf.schema.containers import Section, Value
-    from dotconf.schema.types import Boolean, Integer, Float, String
+    from confiture.schema.containers import many, once
+    from confiture.schema.containers import Section, Value
+    from confiture.schema.types import Boolean, Integer, Float, String
 
     # Schema definition:
 
@@ -79,9 +79,9 @@ Then, to use the parser::
     ...     }
     ... }
     ... '''
-    >>> from dotconf import Dotconf
+    >>> from confiture import Confiture
     >>> from myconfschema import MyWebserverConfiguration
-    >>> parsed_conf = Dotconf(conf, schema=MyWebserverConfiguration()).parse()
+    >>> parsed_conf = Confiture(conf, schema=MyWebserverConfiguration()).parse()
     >>> print 'daemon:', parsed_conf.get('daemon')
     True
     >>> for vhost in parsed_conf.subsections('host'):

@@ -2,7 +2,7 @@
 Argparse integration
 ====================
 
-Dotconf provide an optionnal integration with the standard ``argparse``
+Confiture provide an optionnal integration with the standard ``argparse``
 module. This compatibility brings you a way to override some configuration
 values using a command line argument.
 
@@ -38,7 +38,7 @@ providing the argument parser to populate::
     schema = MySchema()
     schema.populate_argparse(parser)
     args = parser.parse_args()
-    config = Dotconf(conf, schema=schema)
+    config = Confiture(conf, schema=schema)
     my_config = config.parse()
 
 
@@ -50,11 +50,11 @@ Full featured example
     from pprint import pprint
     import argparse
 
-    from dotconf import Dotconf
-    from dotconf.schema import ValidationError
-    from dotconf.parser import ParsingError
-    from dotconf.schema.containers import Section, Value, List
-    from dotconf.schema.types import Boolean, String
+    from confiture import Confiture
+    from confiture.schema import ValidationError
+    from confiture.parser import ParsingError
+    from confiture.schema.containers import Section, Value, List
+    from confiture.schema.types import Boolean, String
 
 
     config_test = '''
@@ -86,7 +86,7 @@ Full featured example
         args = argument_parser.parse_args()
 
         # 5. Create the configuration parser:
-        config = Dotconf(config_test, schema=schema)
+        config = Confiture(config_test, schema=schema)
 
         # 6. Parse the configuration and show it:
         try:

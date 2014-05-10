@@ -1,4 +1,4 @@
-""" Builtin types of dotconf.schema
+""" Builtin types of confiture.schema
 """
 
 import re
@@ -18,7 +18,7 @@ except ImportError:
 else:
     IPADDR_ENABLED = True
 
-from dotconf.schema import Type, ValidationError
+from confiture.schema import Type, ValidationError
 
 
 class Number(Type):

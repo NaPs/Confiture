@@ -1,9 +1,9 @@
-""" Dotconf's parser tests.
+""" Confiture's parser tests.
 """
 
 import pytest
 
-from dotconf.parser import DotconfLexer, DotconfParser, ParsingError
+from confiture.parser import ConfitureLexer, ConfitureParser, ParsingError
 
 
 def test_lexer():
@@ -26,7 +26,7 @@ def test_lexer():
 
 
 def check_token(test, expected_type, expected_value):
-    lexer = DotconfLexer()
+    lexer = ConfitureLexer()
     lexer.input(test)
     token = lexer.next()
     assert token.type == expected_type
@@ -37,7 +37,7 @@ def test_parser_basic():
     daemon = yes  # This is a comment after an assignation
     # This is comment
     '''
-    parser = DotconfParser(test)
+    parser = ConfitureParser(test)
     output = parser.parse()
     assert output.get('daemon') is True
 
@@ -53,7 +53,7 @@ def test_parser_list():
             2,
             3,
     '''
-    parser = DotconfParser(test)
+    parser = ConfitureParser(test)
     output = parser.parse()
     assert output.get('list1') == [1, 2, 3]
     assert output.get('list2') == [1, 2, 3]
@@ -69,7 +69,7 @@ def test_parser_section():
     section2 'arg' {}
     section3 'arg1', 'arg2' {}
     '''
-    parser = DotconfParser(test)
+    parser = ConfitureParser(test)
     output = parser.parse()
     assert tuple(output.subsections('section1'))[0].get('key') == 'test'
     assert tuple(output.subsections('section2'))[0].args == ['arg']
@@ -77,13 +77,13 @@ def test_parser_section():
 
 def test_parser_empty():
     test = ''''''
-    parser = DotconfParser(test)
+    parser = ConfitureParser(test)
     output = parser.parse()
 
 def test_parser_end_of_file():
     test = '''
     section {
     '''
-    parser = DotconfParser(test)
+    parser = ConfitureParser(test)
     with pytest.raises(ParsingError):
         parser.parse()

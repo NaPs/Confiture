@@ -4,7 +4,7 @@ import os
 version = '1.9~dev'
 ldesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 
-setup(name='dotconf',
+setup(name='confiture',
       version=version,
       description='Advanced configuration parser for Python',
       long_description=ldesc,
@@ -17,10 +17,10 @@ setup(name='dotconf',
                    'Topic :: Software Development',
                    'Topic :: Software Development :: Libraries',
                    'Topic :: Text Processing'],
-      keywords='configuration parser dotconf conf',
+      keywords='configuration parser confiture conf dotconf',
       author='Antoine Millet',
       author_email='antoine@inaps.org',
-      url='https://idevelop.org/p/dotconf/',
+      url='https://idevelop.org/p/confiture/',
       license='MIT',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
