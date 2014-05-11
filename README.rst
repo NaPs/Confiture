@@ -195,6 +195,11 @@ TODO
 Changelog
 ---------
 
+v2.1 - XXX (not yet released)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-
+
 v2.0 - Strawberry, released on 11/05/14
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
