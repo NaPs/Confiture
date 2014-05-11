@@ -200,8 +200,8 @@ v1.9 (not yet released)
 
 -
 
-v1.8 08/09/13
-~~~~~~~~~~~~~
+v1.8 released on 08/09/13
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This new release bring a lot of bugfixes all reported by Stefan Tschiggerl.
 Thanks to him for its time and its help to enhance Confiture.
