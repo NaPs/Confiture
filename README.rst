@@ -195,10 +195,29 @@ TODO
 Changelog
 ---------
 
-v1.9 (not yet released)
-~~~~~~~~~~~~~~~~~~~~~~~
+v2.0 - Strawberry, released on 11/05/14
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--
+I finally decided to rename Dotconf as Confiture to avoid name conflict with
+another (and similar) project which is already packaged in several distro.
+Confiture means jam in French and is also at one letter from Configure.
+
+Obviously, this change has broken the API, so I incremented sur API compat
+version number. Migrating from Dotconf to Confiture will be simple as
+substituting "dotconf" by "confiture" and "Dotconf" by "Confiture".
+
+Changes:
+
+- Renamed Dotconf as Confiture
+- Added a beautiful logo :-)
+- Fixed documentation build
+- Fixed Travis-CI execution
+- Fixed parser which now detects unexpected end of files
+- Now use universal newline flag when opening file in from_filename (ref #13)
+
+New contributors:
+
+- Grégoire Rocher (provided a fix for the parser)
 
 v1.8 released on 08/09/13
 ~~~~~~~~~~~~~~~~~~~~~~~~~

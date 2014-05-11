@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.9~dev'
+version = '2.0'
 ldesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 
 setup(name='confiture',
