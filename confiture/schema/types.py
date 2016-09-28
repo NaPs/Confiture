@@ -5,6 +5,7 @@ import re
 import sys
 import numbers
 import socket
+import os.path
 
 if sys.version_info[0] >= 3:
     import urllib.parse as urlparse
@@ -386,3 +387,17 @@ class Eval(String):
             return eval(value, self._globals, self._locals)
         except Exception as err:
             raise ValidationError('Bad expression: %s' % err)
+
+
+class Path(String):
+
+    """ A string representing a filesystem path.
+
+    It will expand '~' to user home directory and return an absolute path if
+    you provide a relative path (this is usefull if you change the working
+    directory of a process after configuration parsing).
+    """
+
+    def validate(self, value):
+        value = super(Path, self).validate(value)
+        return os.path.abspath(os.path.expanduser(value))

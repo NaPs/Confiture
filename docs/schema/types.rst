@@ -14,6 +14,7 @@ String based types
 .. autoclass:: confiture.schema.types.Url
 .. autoclass:: confiture.schema.types.IPSocketAddress
 .. autoclass:: confiture.schema.types.Eval
+.. autoclass:: confiture.schema.types.Path
 
 
 Number based types
