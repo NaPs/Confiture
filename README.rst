@@ -195,10 +195,16 @@ TODO
 Changelog
 ---------
 
-v2.1 - XXX (not yet released)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+v2.1 - Strawberry mark II, released on 12/10/16
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--
+This release only fix a small bug related to encoding and setuptools building
+process and adds the Path schema type contributed by Anaël Beutot.
+
+Changes:
+
+- Added the Path schema type
+- Fixed encoding bug when building Python package on Python3/non-utf8 system
 
 v2.0 - Strawberry, released on 11/05/14
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

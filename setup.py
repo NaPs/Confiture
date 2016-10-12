@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from io import open
 import os
 
-version = '2.1~dev'
+version = '2.1'
 ldesc = open(os.path.join(os.path.dirname(__file__), 'README.rst'), encoding='utf8').read()
 
 setup(name='confiture',
